@@ -21,8 +21,11 @@ public class Bolt {
 	/*Stream start with bolt. e.g. S1_S2*/
 	private String boltStream ;
 	
-	/*Bolt code from web*/
-	private String code ;
+	/*Bolt code from web for auto code generated */
+	private String boltCodeSimple ;
+	
+	/**Bolt code from web for recover code to web*/
+	private String boltCode ;
 	
 	/*The bolt belongs to which topology*/
 	private String topologyid ;

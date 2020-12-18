@@ -21,8 +21,11 @@ public class KafkaSpout {
 	/*The kafka spout belongs to which topology*/
 	private String topologyid ;
 	
-	/*Kafka spout code from web*/
+	/*Kafka spout code from web for recover code to web*/
 	private String kafkaSpoutCode ;
+	
+	/*Kafa spout code from web for auto generate code*/
+	private String kafkaSpoutCodeSimple ;
 	
 	/*stream start with kafka spout. e.g. S1-S2*/
 	private String kafkaSpoutStream ;

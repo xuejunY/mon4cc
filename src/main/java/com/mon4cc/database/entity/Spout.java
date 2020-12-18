@@ -25,6 +25,9 @@ public class Spout {
 	/*The spout belongs to which topology*/
 	private String topologyid ;
 	
-	/*The spout code from web*/
+	/*The spout code from web for cover code to web*/
 	private String spoutCode ;
+	
+	/*The spout code from web for auto code generated to web*/
+	private String spoutCodeSimple ;
 }
