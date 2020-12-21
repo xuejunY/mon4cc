@@ -22,6 +22,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collection;
 
+import com.mon4cc.database.entity.Bolt;
+import com.mon4cc.database.entity.Grouping;
+import com.mon4cc.database.entity.KafkaSpout;
+import com.mon4cc.database.entity.Spout;
+import com.mon4cc.database.service.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.camunda.bpm.model.bpmn.Bpmn;
@@ -36,32 +41,46 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.mon4cc.parse.entity.ModelParseDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-
-
-
-
+//@Component
+@Configuration
 public class ModelParse {
+	protected BpmnModelInstance modelInstance;
+	private String tid ;
+	private String topologyName ;
+	private boolean isLocal ;
+	private String modelXml ;
+	Collection<IntermediateThrowEvent> kafkaSpouts = null ;
+	private static final Logger logger = LogManager.getLogger(ModelParse.class) ;
 
-  protected BpmnModelInstance modelInstance;
-  private int tid ;
-  private String topologyName ;
-  private boolean isLocal ;
-  private String modelXml ;
-  Collection<IntermediateThrowEvent> kafkaSpouts = null ;
-  private static final Logger logger = LogManager.getLogger(ModelParse.class) ;
-  
-  public String receiveAndParseData(ModelParseDTO modelParseDTO) {
+	@Autowired
+	private IBoltService iBoltService;
+	@Autowired
+	private ITopologyconfigurationService iTopologyconfigurationService;
+	@Autowired
+	private ISpoutService iSpoutService;
+	@Autowired
+	private IKafkaspoutService iKafkaspoutService;
+	@Autowired
+	private IGroupingService iGroupingService;
+
+	public String receiveAndParseData(ModelParseDTO modelParseDTO) {
 	  
-	  tid = Integer.parseInt(modelParseDTO.getTid()) ;
+	  tid = modelParseDTO.getTid() ;
 	  topologyName = modelParseDTO.getTopologyName() ;
 	  isLocal = Boolean.parseBoolean(modelParseDTO.getIsLocal()) ;
 	  
 	  modelXml = modelParseDTO.getModelXml() ;
+
+	  iTopologyconfigurationService.insertXml(tid,modelXml);// actually update operation
+
 	  writeStringToFile(modelXml) ;
 	  loadProcess() ;
 	  return null ;
-  }
+	}
   /*
    * Get bolt configuration based on BPMN task,
    * and insert into database ;
@@ -69,6 +88,7 @@ public class ModelParse {
   public boolean parseBolt() {
 	  boolean flag = false ;
 	  Collection<Task> bolts = modelInstance.getModelElementsByType(Task.class) ;
+
 	  for(Task bolt: bolts) {
 		 String medDatas = bolt.getId() ;
 		 String[]data = medDatas.split("_") ;
@@ -80,8 +100,21 @@ public class ModelParse {
 		 String boltStream = data[3] ;
 		 
 		 String boltComponentName = bolt.getName() ;
-		 
-		 logger.info("Component Name: {}, Bolt Parallelism: {}",boltComponentName,boltParallelism) ;
+
+		  Bolt bolt1 = new Bolt();
+		  bolt1.setId(boltId);
+		  bolt1.setBoltParallelism(boltParallelism);
+		  bolt1.setBoltStream(boltStream);
+		  bolt1.setBoltComponentName(boltComponentName);
+		  bolt1.setTopologyId(tid);
+
+		  if (iBoltService.select_batch(bolt1.getId())){
+			  iBoltService.update_batch(bolt1);
+		  }else {
+			  iBoltService.insert_batch(bolt1);
+		  }
+
+		  logger.info("Component Name: {}, Bolt Parallelism: {}",boltComponentName,boltParallelism) ;
 	  }
 	  flag = true ;
 	  return flag ;
@@ -107,6 +140,23 @@ public class ModelParse {
 		  
 		  //stream type in the grouping, e.g. S1, S2 are stream.
 		  String stream = datas[1] ;
+
+		  Grouping grouping1 = new Grouping();
+		  grouping1.setGroupingId(groupingId);
+		  grouping1.setSourceComponent(sourceComponent);
+		  grouping1.setTargetComponent(targetComponent);
+		  grouping1.setGrouping(grouping);
+		  grouping1.setStream(stream);
+		  grouping1.setTopologyId(tid);
+		  if (iGroupingService.select_batch(grouping1.getGroupingId())){
+			  iGroupingService.update_batch(grouping1);
+		  }else {
+			  iGroupingService.insert_batch(grouping1);
+		  }
+
+
+
+
 		  logger.info("Grouping: {}, Stream: {},Source: {},Target: {}",grouping,stream,sourceComponent,targetComponent) ;
 	  }
 	  flag = true ;
@@ -134,6 +184,20 @@ public class ModelParse {
 			 
 			 // get spout component name
 			 String spoutComponentName = spout.getName() ;
+
+			 Spout spout1 = new Spout();
+			 spout1.setId(spoutId);
+			 spout1.setSpoutParallelism(spoutParallelism);
+			 spout1.setSpoutStream(spoutStream);
+			 spout1.setSpoutComponentName(spoutComponentName);
+			 spout1.setTopologyId(tid);
+			 if (iSpoutService.select_batch(spout1.getId())){
+				 iSpoutService.update_batch(spout1);
+			 }else {
+				 iSpoutService.insert_batch(spout1);
+			 }
+
+
 			 
 			 logger.info("Parallelism: {}, ComponentName: {}",spoutParallelism,spoutComponentName) ;
 			 /*
@@ -186,6 +250,27 @@ public class ModelParse {
 		 String autoOffsetReset = datas[8] ;
 		 
 		 String topic = datas[9] ;
+
+		 KafkaSpout kafkaSpout1 = new KafkaSpout();
+		 kafkaSpout1.setId(kafkaSpoutId);
+		 kafkaSpout1.setSpoutComponentName(kafkaSpoutComponentName);
+		 kafkaSpout1.setSpoutParallelism(parallelism);
+		 kafkaSpout1.setKafkaSpoutStream(kafkaSpoutStream);
+		 kafkaSpout1.setBoostrapServer(kafkaBootstrapAddress);
+		 kafkaSpout1.setMaxPollRecord(maxPollRecords);
+		 kafkaSpout1.setAutoCommit(enableAutoCommit);
+		 kafkaSpout1.setGroupId(groupId);
+		 kafkaSpout1.setOffsetReset(autoOffsetReset);
+		 kafkaSpout1.setTopic(topic);
+		 kafkaSpout1.setTopologyId(tid);
+
+		 if (iKafkaspoutService.select_batch(kafkaSpout1.getId())){
+			 iKafkaspoutService.update_batch(kafkaSpout1);
+		 }else {
+			 iKafkaspoutService.insert_batch(kafkaSpout1);
+		 }
+
+
 //		 System.out.println("Component Name :"+componentName+", parallelism: "+parallelism+", bootstrap.servers: "+
 //		 kafkaBootstrapAddress+"\n"+"max.poll.records: "+maxPollRecords+", enable.auto.commit: "+enableAutoCommit+
 //		 ", group.id: "+groupId+", auto.offset.reset: "+autoOffsetReset) ;

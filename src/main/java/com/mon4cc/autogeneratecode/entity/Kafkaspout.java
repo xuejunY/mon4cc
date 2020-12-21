@@ -7,7 +7,7 @@ import lombok.Data;
  * @Date 2020年12月16日
  */
 @Data
-public class KafkaSpout {
+public class Kafkaspout {
 	
 	private String spoutComponentName ;
 	private int spoutParallelism ;
@@ -16,5 +16,6 @@ public class KafkaSpout {
 	private boolean enableAutoCommit ;
 	private String groupId ;
 	private String autoOffsetReset ;
+	private String completeKafkaSpoutCode;
 	
 }

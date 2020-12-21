@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mon4cc.database.mapper.KafkaspoutMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mon4cc.database.entity.KafkaSpout">
+        <id column="id" property="id" />
+        <result column="spoutComponentName" property="spoutComponentName" />
+        <result column="spoutParallelism" property="spoutParallelism" />
+        <result column="topologyId" property="topologyId" />
+        <result column="kafkaSpoutCode" property="kafkaSpoutCode" />
+        <result column="kafkaSpoutCodeSimple" property="kafkaSpoutCodeSimple" />
+        <result column="kafkaSpoutStream" property="kafkaSpoutStream" />
+        <result column="boostrapServer" property="boostrapServer" />
+        <result column="maxPollRecord" property="maxPollRecord" />
+        <result column="autoCommit" property="autoCommit" />
+        <result column="groupId" property="groupId" />
+        <result column="offsetReset" property="offsetReset" />
+        <result column="topic" property="topic" />
+        <result column="completeKafkaSpoutCode" property="completeKafkaSpoutCode" />
+    </resultMap>
+
+    <insert id="addKafkaSpout" parameterType='KafkaSpout'>
+        insert into kafkaspout (id,spoutComponentName,spoutParallelism,kafkaSpoutStream,boostrapServer,
+        maxPollRecord,autoCommit,groupId,offsetReset,topic,topologyId)
+        values (#{id},#{spoutComponentName},#(spoutParallelism),#{kafkaSpoutStream},#{boostrapServer},
+        #{maxPollRecord},#{autoCommit},#{groupId},#{offsetReset},#{topic},#{topologyId})
+    </insert>
+
+    <select id="selectKafkaSpout" resultType="KafkaSpout">
+        select * from kafkaspout where id = #{id}
+    </select>
+
+    <update id="updateKafkaSpout" parameterType="KafkaSpout">
+        update kafkaspout set spoutComponentName = #{spoutComponentName},spoutParallelism = #{spoutParallelism},
+        kafkaSpoutStream = #{kafkaSpoutStream},boostrapServer = #{boostrapServer},maxPollRecord = #{maxPollRecord},
+        autoCommit = #{autoCommit},groupId = #{groupId},offsetReset = #{offsetReset},topic = #{topic}
+        where id = #{id} and topologyId = #{topologyId}
+    </update>
+
+
+
+</mapper>

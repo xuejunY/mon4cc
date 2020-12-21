@@ -19,7 +19,7 @@ public class KafkaSpout {
 	private Integer spoutParallelism ;
 	
 	/*The kafka spout belongs to which topology*/
-	private String topologyid ;
+	private String topologyId ;
 	
 	/*Kafka spout code from web for recover code to web*/
 	private String kafkaSpoutCode ;
@@ -29,6 +29,8 @@ public class KafkaSpout {
 	
 	/*stream start with kafka spout. e.g. S1-S2*/
 	private String kafkaSpoutStream ;
+
+	private String completeKafkaSpoutCode;
 	/*
 	 * kafka configuration as followed
 	 */

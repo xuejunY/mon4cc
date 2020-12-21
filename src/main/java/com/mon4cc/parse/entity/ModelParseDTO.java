@@ -18,4 +18,5 @@ public class ModelParseDTO {
 	private String isLocal ;
 	private String modelXml ;
 
+
 }
