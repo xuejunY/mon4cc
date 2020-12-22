@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mon4cc.database.mapper.SpoutMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mon4cc.database.entity.Spout">
+        <id column="id" property="id" />
+        <result column="spoutComponentName" property="spoutComponentName" />
+        <result column="spoutParallelism" property="spoutParallelism" />
+        <result column="spoutStream" property="spoutStream" />
+        <result column="topologyId" property="topologyId" />
+        <result column="spoutCode" property="spoutCode" />
+        <result column="spoutCodeSimple" property="spoutCodeSimple" />
+        <result column="completeSpoutCode" property="completeSpoutCode" />
+
+    </resultMap>
+
+    <insert id="insertSpout" parameterType='Spout'>
+        insert into spout (id,spoutComponentName,spoutParallelism,spoutStream,topologyId)
+        values (#{id},#{spoutComponentName},#(spoutParallelism),#{spoutStream},#{topologyId})
+    </insert>
+
+</mapper>

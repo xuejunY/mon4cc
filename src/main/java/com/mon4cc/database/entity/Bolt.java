@@ -28,5 +28,7 @@ public class Bolt {
 	private String boltCode ;
 	
 	/*The bolt belongs to which topology*/
-	private String topologyid ;
+	private String topologyId ;
+
+	private String completeBoltCode;
 }

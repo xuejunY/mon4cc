@@ -23,11 +23,13 @@ public class Spout {
 	private String spoutStream ;
 
 	/*The spout belongs to which topology*/
-	private String topologyid ;
+	private String topologyId ;
 	
 	/*The spout code from web for cover code to web*/
 	private String spoutCode ;
 	
 	/*The spout code from web for auto code generated to web*/
 	private String spoutCodeSimple ;
+
+	private String completeSpoutCode;
 }

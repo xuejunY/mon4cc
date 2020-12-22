@@ -13,5 +13,7 @@ public class Grouping {
 	  * KafkaSpout, Spout, Bolt also contains stream, it is convenience modeling.
 	  * */
 	 private String stream ;
+	/*The grouping belongs to which topology*/
+	private String topologyId ;
 
 }

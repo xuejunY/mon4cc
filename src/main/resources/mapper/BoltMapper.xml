@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mon4cc.database.mapper.BoltMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mon4cc.database.entity.Bolt">
+        <id column="id" property="id" />
+        <result column="boltComponentName" property="boltComponentName" />
+        <result column="boltParallelism" property="boltParallelism" />
+        <result column="boltStream" property="boltStream" />
+        <result column="boltCodeSimple" property="boltCodeSimple" />
+        <result column="boltCode" property="boltCode" />
+        <result column="topologyId" property="topologyId" />
+        <result column="completeBoltCode" property="completeBoltCode" />
+    </resultMap>
+
+    <insert id="insertBolt" parameterType='Bolt'>
+        insert into bolt (id,boltComponentName,boltParallelism,boltStream,topologyId)
+        values (#{id},#{boltComponentName},#(boltParallelism),#{boltStream},#{topologyId})
+    </insert>
+    
+    <select id="selectBolt" resultType="Bolt">
+        select * from bolt where id = #{id}
+    </select>
+
+    <update id="updateBolt" parameterType="Bolt">
+        update bolt set boltComponentName = #{boltComponentName},boltParallelism = #{boltParallelism},
+        boltStream = #{boltStream}
+        where id = #{id} and topologyId = #{topologyId}
+    </update>
+
+</mapper>

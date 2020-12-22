@@ -10,4 +10,5 @@ import lombok.Data;
 public class Spout {
 	private String spoutComponentName ;
 	private int spoutParallelism ;
+	private String completeSpoutCode;
 }

@@ -10,10 +10,10 @@ import lombok.Data;
 public class TopologyConfiguration {
 	
 	/*Topology id*/
-	private int topologyId ;
+	private String topologyId ;
 	
 	/*Topology name*/
-	private String name ;
+	private String topologyName ;
 	
 	/*Whether topology is deployed in local or distributed, 
 	 * true is local and false is distributed */
@@ -32,5 +32,5 @@ public class TopologyConfiguration {
 	private String creater ;
 	
 	/*Topology's create time*/
-	private String time ;
+	private String createTime ;
 }

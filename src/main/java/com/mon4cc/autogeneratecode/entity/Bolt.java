@@ -7,5 +7,6 @@ public class Bolt {
 
 	private int boltParallelism ;
 	private String boltComponentName ;
+	private String completeBoltCode;
 
 }

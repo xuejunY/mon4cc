@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mon4cc.database.mapper.TopologyconfigurationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mon4cc.database.entity.TopologyConfiguration">
+        <id column="topologyId" property="topologyId" />
+        <result column="topologyName" property="topologyName" />
+        <result column="isLocal" property="isLocal" />
+        <result column="topologyXml" property="topologyXml" />
+        <result column="description" property="description" />
+        <result column="state" property="state" />
+        <result column="creater" property="creater" />
+        <result column="createTime" property="createTime" />
+    </resultMap>
+    <update id="addXml" parameterType="TopologyConfiguration">
+        update topologyconfiguration set topologyXml = #{modelXml}
+        where topologyTd = #{tid}
+    </update>
+
+</mapper>
