@@ -1,4 +1,4 @@
-package com.mon4cc.dabavase.utils;
+package com.mon4cc.database.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

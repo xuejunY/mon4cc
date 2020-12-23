@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 
 import com.mon4cc.database.entity.Bolt;
@@ -44,6 +45,7 @@ import com.mon4cc.parse.entity.ModelParseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 //@Component
 @Configuration
@@ -390,74 +392,22 @@ public class ModelParse {
 	  modelInstance = Bpmn.readModelFromStream(getClass().getClassLoader().getResourceAsStream("demo.bpmn"));
   }
 
-
-  /*
-   * You can access every element of the BPMN model by id.
-   */
   
-  public void findElementById() {
-	StartEvent startEvent = modelInstance.getModelElementById("SequenceFlow_0h21x7r") ;
-	System.out.println(startEvent.getName()) ;
-	
-	/*
-    // get the start event of the process by id
-    StartEvent startEvent = modelInstance.getModelElementById("startEvent");
-    
-    
-    assertThat(startEvent.getName()).isEqualTo("Start Process");
-
-    // get the forking gateway by id
-    ExclusiveGateway fork = modelInstance.getModelElementById("gatewayFork");
-    assertThat(fork.getName()).isEqualTo("Fork");
-
-    // get the end event of the process by id
-    EndEvent endEvent = modelInstance.getModelElementById("endEvent");
-    assertThat(endEvent.getName()).isEqualTo("End Process");
-    */
-  }
-
-
-  /*
-   *  You can access elements by their type.
-   */
-  @Test
-  public void findElementByType() {
-	  Collection<SequenceFlow> flowNode = modelInstance.getModelElementsByType(SequenceFlow.class);
-	
-	    // there exist 8 flow nodes: start event, service task, 2x exclusive gateways, 2x user tasks, script task, end event
-	 for(SequenceFlow f : flowNode) {
-//		 System.out.println(f.getAttributeValue("name")) ; 
-		 String[]groupingAndStream = f.getName().split("_") ;
-		 System.out.println("Target: "+f.getTarget().getName()+" Source: "+f.getSource().getName()) ;
-		 System.out.println("：(") ;
-		 String grouping = groupingAndStream[0] ;
-		 String stream = groupingAndStream[1] ;
-		 System.out.println("Grouping："+grouping+" ===***=== Stream: "+stream) ;
-		 //System.out.println(f.getId()) ;
-		 
-	 }
-	   
-	/*
-    // get all service tasks from the model
-    Collection<ServiceTask> serviceTasks = modelInstance.getModelElementsByType(ServiceTask.class);
-    // it only exists one service task
-    assertThat(serviceTasks).hasSize(1);
-
-    // get all events (eg start, intermediate, boundary and end events) from the model
-    Collection<Event> events = modelInstance.getModelElementsByType(Event.class);
-    // it exists a start and an end event
-    assertThat(events).hasSize(2);
-
-    // get all flow nodes in the model
-    Collection<FlowNode> flowNodes = modelInstance.getModelElementsByType(FlowNode.class);
-    // there exist 8 flow nodes: start event, service task, 2x exclusive gateways, 2x user tasks, script task, end event
-    assertThat(flowNodes).hasSize(8);
-
-    // get all extension elements in the model
-    Collection<ExtensionElements> extensionElements = modelInstance.getModelElementsByType(ExtensionElements.class);
-    // the start event and the end event contain extension elements
-    assertThat(extensionElements).hasSize(2);
-    */
+  public String parseXml(MultipartFile xmlFile) {
+	  InputStream in = null ;
+			try {
+				in = xmlFile.getInputStream() ;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+	  modelInstance = Bpmn.readModelFromStream(in);
+	  parseBolt();
+	  parseSpout();
+	  parseGrouping();
+	  return "success";
+  
   }
 
 }
