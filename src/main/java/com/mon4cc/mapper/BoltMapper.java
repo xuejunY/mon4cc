@@ -1,8 +1,7 @@
-package com.mon4cc.database.mapper;
+package com.mon4cc.mapper;
 
 
-import com.mon4cc.database.entity.Bolt;
-import org.springframework.context.annotation.ComponentScan;
+import com.mon4cc.entity.Bolt;
 import org.springframework.stereotype.Service;
 
 

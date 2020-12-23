@@ -1,9 +1,8 @@
-package com.mon4cc.database.service.impl;
+package com.mon4cc.service.impl;
 
-import com.mon4cc.database.entity.KafkaSpout;
-import com.mon4cc.database.mapper.KafkaspoutMapper;
-import com.mon4cc.database.service.IKafkaspoutService;
-import org.apache.logging.log4j.core.appender.mom.kafka.KafkaManager;
+import com.mon4cc.entity.KafkaSpout;
+import com.mon4cc.mapper.KafkaspoutMapper;
+import com.mon4cc.service.IKafkaspoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

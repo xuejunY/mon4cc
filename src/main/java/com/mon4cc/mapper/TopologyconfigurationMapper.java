@@ -1,4 +1,4 @@
-package com.mon4cc.database.mapper;
+package com.mon4cc.mapper;
 
 import org.springframework.stereotype.Service;
 

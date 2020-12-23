@@ -1,4 +1,4 @@
-package com.mon4cc.database.service;
+package com.mon4cc.service;
 
 /**
  * <p>

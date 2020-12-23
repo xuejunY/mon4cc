@@ -1,8 +1,8 @@
-package com.mon4cc.database.service.impl;
+package com.mon4cc.service.impl;
 
-import com.mon4cc.database.entity.Grouping;
-import com.mon4cc.database.mapper.GroupingMapper;
-import com.mon4cc.database.service.IGroupingService;
+import com.mon4cc.entity.Grouping;
+import com.mon4cc.mapper.GroupingMapper;
+import com.mon4cc.service.IGroupingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

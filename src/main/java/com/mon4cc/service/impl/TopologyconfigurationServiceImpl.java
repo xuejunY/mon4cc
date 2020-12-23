@@ -1,7 +1,7 @@
-package com.mon4cc.database.service.impl;
+package com.mon4cc.service.impl;
 
-import com.mon4cc.database.mapper.TopologyconfigurationMapper;
-import com.mon4cc.database.service.ITopologyconfigurationService;
+import com.mon4cc.mapper.TopologyconfigurationMapper;
+import com.mon4cc.service.ITopologyconfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

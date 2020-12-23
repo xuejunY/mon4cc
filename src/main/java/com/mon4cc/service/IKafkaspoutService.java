@@ -1,6 +1,6 @@
-package com.mon4cc.database.service;
+package com.mon4cc.service;
 
-import com.mon4cc.database.entity.KafkaSpout;
+import com.mon4cc.entity.KafkaSpout;
 
 /**
  * <p>

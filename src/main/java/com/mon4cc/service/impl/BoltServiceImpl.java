@@ -1,8 +1,8 @@
-package com.mon4cc.database.service.impl;
+package com.mon4cc.service.impl;
 
-import com.mon4cc.database.entity.Bolt;
-import com.mon4cc.database.mapper.BoltMapper;
-import com.mon4cc.database.service.IBoltService;
+import com.mon4cc.entity.Bolt;
+import com.mon4cc.mapper.BoltMapper;
+import com.mon4cc.service.IBoltService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -10,8 +10,8 @@ public class Hello {
 	
 	@RequestMapping("/hello")
 	public String hello() {
-		System.out.println("hello") ;
-		return "hello" ;
+		System.out.println("hello");
+		return "hello";
 	}
 
 }
