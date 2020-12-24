@@ -356,8 +356,8 @@ public class ModelParse {
 	  modelInstance = Bpmn.readModelFromStream(in);
 	  System.out.println("数据输入成功") ;
 	  System.out.println("解析spout:"+parseSpout());
-	  System.out.println("解析bolt:"+parseBolt());
-	  System.out.println("解析边:"+parseGrouping());
+//	  System.out.println("解析bolt:"+parseBolt());
+//	  System.out.println("解析边:"+parseGrouping());
 	  return "success";
   
   }
