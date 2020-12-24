@@ -68,6 +68,8 @@ public class BoltTemplate {
 		return execute.replace("{execute}", "database") ;
 	}
 	
+	
+	
 	public String declareOutputFields() {
 		return declareOutputFields.replace("{declare}", "database") ;
 	}

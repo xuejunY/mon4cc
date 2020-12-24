@@ -23,15 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 
-<<<<<<< HEAD
 
-=======
-import com.mon4cc.entity.Bolt;
-import com.mon4cc.entity.Grouping;
-import com.mon4cc.entity.KafkaSpout;
-import com.mon4cc.entity.Spout;
-import com.mon4cc.service.*;
->>>>>>> branch 'master' of https://github.com/xuejunY/mon4cc.git
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.camunda.bpm.model.bpmn.Bpmn;
