@@ -17,7 +17,8 @@
         update topologyconfiguration set topologyXml = #{modelXml}
         where topologyId = #{tid}
     </update>
-    
+
+
     <select id="getXml" >
         select topologyXml from topologyconfiguration where topologyId=#{tid}
     </select>
