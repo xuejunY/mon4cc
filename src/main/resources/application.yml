@@ -1,19 +1,19 @@
 server:
   port: 8888
-#  servlet:
-#    context-path: /api/v1
+  servlet:
+    context-path: /api/v1
 #    session:
 #      cookie:
 #       name: BIUSID
 spring:
   profiles:
     active: dev
-    include: druid,mybatisplus,shiro
+    include: druid,mybatisplus
   redis:
     host: localhost
     port: 6379
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/mybatis?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: qwer1234

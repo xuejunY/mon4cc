@@ -1,6 +1,6 @@
-package com.mon4cc.database.mapper;
+package com.mon4cc.mapper;
 
-import com.mon4cc.database.entity.Grouping;
+import com.mon4cc.entity.Grouping;
 import org.springframework.stereotype.Service;
 
 /**

@@ -23,11 +23,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 
-import com.mon4cc.database.entity.Bolt;
-import com.mon4cc.database.entity.Grouping;
-import com.mon4cc.database.entity.KafkaSpout;
-import com.mon4cc.database.entity.Spout;
-import com.mon4cc.database.service.*;
+import com.mon4cc.entity.Bolt;
+import com.mon4cc.entity.Grouping;
+import com.mon4cc.entity.KafkaSpout;
+import com.mon4cc.entity.Spout;
+import com.mon4cc.service.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.camunda.bpm.model.bpmn.Bpmn;
@@ -39,12 +39,10 @@ import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
 import org.camunda.bpm.model.bpmn.instance.StartEvent;
 import org.camunda.bpm.model.bpmn.instance.Task;
 import org.junit.Before;
-import org.junit.Test;
 
 import com.mon4cc.parse.entity.ModelParseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 //@Component

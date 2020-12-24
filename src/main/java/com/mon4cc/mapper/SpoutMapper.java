@@ -1,7 +1,7 @@
-package com.mon4cc.database.mapper;
+package com.mon4cc.mapper;
 
 
-import com.mon4cc.database.entity.Spout;
+import com.mon4cc.entity.Spout;
 import org.springframework.stereotype.Service;
 
 /**

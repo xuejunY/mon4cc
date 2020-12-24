@@ -1,8 +1,8 @@
-package com.mon4cc.database.service.impl;
+package com.mon4cc.service.impl;
 
-import com.mon4cc.database.entity.Spout;
-import com.mon4cc.database.mapper.SpoutMapper;
-import com.mon4cc.database.service.ISpoutService;
+import com.mon4cc.entity.Spout;
+import com.mon4cc.mapper.SpoutMapper;
+import com.mon4cc.service.ISpoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
