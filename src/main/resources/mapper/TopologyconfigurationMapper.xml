@@ -15,7 +15,7 @@
     </resultMap>
     <update id="addXml" parameterType="TopologyConfiguration">
         update topologyconfiguration set topologyXml = #{modelXml}
-        where topologyTd = #{tid}
+        where topologyId = #{tid}
     </update>
     
     <select id="getXml" >

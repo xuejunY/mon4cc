@@ -14,6 +14,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface TopologyconfigurationMapper{
 
-    int addXml(@Param("tid") String tid, @Param(("modelXml")) String modelXml);
+    int addXml(@Param("tid") String tid, @Param("modelXml") String modelXml);
     String getXml(@Param("tid") String tid);
 }
