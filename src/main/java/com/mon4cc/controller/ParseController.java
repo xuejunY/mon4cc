@@ -36,8 +36,8 @@ public class ParseController {
 	}
 
 	@RequestMapping(value="/model/parse")
-	public void modelParse(@RequestParam("tid") String tid){
-
+	public String modelParse(@RequestParam("tid") String tid){
+		 return modelParse.parseModel(tid);
 	}
 	
 	@RequestMapping(value="/model/test")

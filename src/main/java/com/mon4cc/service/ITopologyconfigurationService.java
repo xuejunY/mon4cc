@@ -11,5 +11,6 @@ package com.mon4cc.service;
 public interface ITopologyconfigurationService{
 
     boolean insertXml(String tid, String modelXml);
+    String selectXml(String tid);
 
 }

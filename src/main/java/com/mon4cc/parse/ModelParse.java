@@ -79,9 +79,12 @@ public class ModelParse {
 
 	public String parseModel(String tid) {
 		//根据tid从数据库查出model
-		String modelxml="";
+		String modelxml=iTopologyconfigurationService.selectXml(tid) ;
 		modelInstance=Bpmn.readModelFromStream(trasStringToInputStream.getInputStream(modelxml));
-	  return null ;
+		parseSpout();
+		parseBolt();
+		parseGrouping();
+	  return "success" ;
 	}
 
 

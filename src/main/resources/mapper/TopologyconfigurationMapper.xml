@@ -19,7 +19,7 @@
     </update>
     
     <select id="getXml" >
-        select topologyXml from topologyconfiguration where tid=#{tid}
+        select topologyXml from topologyconfiguration where topologyId=#{tid}
     </select>
 
 </mapper>

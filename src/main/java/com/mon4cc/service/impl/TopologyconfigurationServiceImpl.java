@@ -27,5 +27,11 @@ public class TopologyconfigurationServiceImpl implements ITopologyconfigurationS
         topologyconfigurationMapper.addXml(tid,modelXml);
         return true;
     }
+
+    @Override
+    public String selectXml(String tid) {
+        return  topologyconfigurationMapper.getXml(tid);
+
+    }
 }
 
