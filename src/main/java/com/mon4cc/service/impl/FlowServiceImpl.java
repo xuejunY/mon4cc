@@ -1,8 +1,8 @@
 package com.mon4cc.service.impl;
 
-import com.mon4cc.entity.Grouping;
-import com.mon4cc.mapper.GroupingMapper;
-import com.mon4cc.service.IGroupingService;
+import com.mon4cc.entity.Flow;
+import com.mon4cc.mapper.FlowMapper;
+import com.mon4cc.service.IFlowService;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +17,11 @@ import org.springframework.stereotype.Service;
  * @since 2020-12-19
  */
 @Service
-public class GroupingServiceImpl implements IGroupingService {
+public class FlowServiceImpl implements IFlowService {
     @Autowired
-    private GroupingMapper groupingMapper;
+    private FlowMapper groupingMapper;
     @Override
-    public boolean insert_batch(Grouping grouping1) {
+    public boolean insert_batch(Flow grouping1) {
         groupingMapper.insertGrouping(grouping1);
         return true;
     }
@@ -34,7 +34,7 @@ public class GroupingServiceImpl implements IGroupingService {
     }
 
     @Override
-    public boolean update_batch(Grouping grouping) {
+    public boolean update_batch(Flow grouping) {
         groupingMapper.updateGrouping(grouping);
         return true;
     }

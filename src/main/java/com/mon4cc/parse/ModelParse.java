@@ -16,14 +16,12 @@
  */
 package com.mon4cc.parse;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 
 
+import com.mon4cc.utils.TrasStringToInputStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.camunda.bpm.model.bpmn.Bpmn;
@@ -37,12 +35,12 @@ import org.camunda.bpm.model.bpmn.instance.Task;
 import org.junit.Before;
 
 import com.mon4cc.entity.Bolt;
-import com.mon4cc.entity.Grouping;
+import com.mon4cc.entity.Flow;
 import com.mon4cc.entity.KafkaSpout;
 import com.mon4cc.entity.Spout;
-import com.mon4cc.parse.entity.ModelParseDTO;
+import com.mon4cc.parse.entity.ModelDTO;
 import com.mon4cc.service.IBoltService;
-import com.mon4cc.service.IGroupingService;
+import com.mon4cc.service.IFlowService;
 import com.mon4cc.service.IKafkaspoutService;
 import com.mon4cc.service.ISpoutService;
 import com.mon4cc.service.ITopologyconfigurationService;
@@ -51,7 +49,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.MultipartFile;
 
-//@Component
+/**
+ * parse spout , bolt , flow, and model configuration
+ */
+
 @Configuration
 public class ModelParse {
 	protected BpmnModelInstance modelInstance;
@@ -63,6 +64,8 @@ public class ModelParse {
 	private static final Logger logger = LogManager.getLogger(ModelParse.class) ;
 
 	@Autowired
+	private TrasStringToInputStream trasStringToInputStream;
+	@Autowired
 	private IBoltService iBoltService;
 	@Autowired
 	private ITopologyconfigurationService iTopologyconfigurationService;
@@ -71,22 +74,17 @@ public class ModelParse {
 	@Autowired
 	private IKafkaspoutService iKafkaspoutService;
 	@Autowired
-	private IGroupingService iGroupingService;
+	private IFlowService iFlowService;
 
-	public String receiveAndParseData(ModelParseDTO modelParseDTO) {
-	  
-	  tid = modelParseDTO.getTid() ;
-	  topologyName = modelParseDTO.getTopologyName() ;
-	  isLocal = Boolean.parseBoolean(modelParseDTO.getIsLocal()) ;
-	  
-	  modelXml = modelParseDTO.getModelXml() ;
 
-	  iTopologyconfigurationService.insertXml(tid,modelXml);// actually update operation
-
-	  writeStringToFile(modelXml) ;
-	  loadProcess() ;
+	public String parseModel(String tid) {
+		//根据tid从数据库查出model
+		String modelxml="";
+		modelInstance=Bpmn.readModelFromStream(trasStringToInputStream.getInputStream(modelxml));
 	  return null ;
 	}
+
+
   /*
    * Get bolt configuration based on BPMN task,
    * and insert into database ;
@@ -147,17 +145,17 @@ public class ModelParse {
 		  //stream type in the grouping, e.g. S1, S2 are stream.
 		  String stream = datas[1] ;
 
-		  Grouping grouping1 = new Grouping();
-		  grouping1.setGroupingId(groupingId);
-		  grouping1.setSourceComponent(sourceComponent);
-		  grouping1.setTargetComponent(targetComponent);
-		  grouping1.setGrouping(grouping);
-		  grouping1.setStream(stream);
-		  grouping1.setTopologyId(tid);
-		  if (iGroupingService.select_batch(grouping1.getGroupingId())){
-			  iGroupingService.update_batch(grouping1);
+		  Flow flow1 = new Flow();
+		  flow1.setGroupingId(groupingId);
+		  flow1.setSourceComponent(sourceComponent);
+		  flow1.setTargetComponent(targetComponent);
+		  flow1.setGroupingType(grouping);
+		  flow1.setStream(stream);
+		  flow1.setTopologyId(tid);
+		  if (iFlowService.select_batch(flow1.getGroupingId())){
+			  iFlowService.update_batch(flow1);
 		  }else {
-			  iGroupingService.insert_batch(grouping1);
+			  iFlowService.insert_batch(flow1);
 		  }
 
 
@@ -330,61 +328,7 @@ public class ModelParse {
 
  }
  */
-  /**
-   * Write model of string type into file 
-   * @param modelXml
-   */
-  public void writeStringToFile(String modelXml) {
-	  //put string type of bpmn.model into file .
-	  //File bpmnModel=new File("D:/java/Spring_mvcWorkSpace/mon4cc/src/main/resources/"+topologyName+".bpmn");
-	  FileOutputStream fos = null ;
-	  File bpmnModel=new File(getResourcePath()+"/"+topologyName+".bpmn") ;
-      if(!bpmnModel.exists()){  
-          try {
-        	  bpmnModel.createNewFile() ;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace() ;
-		}  
-     }
-      byte bytes[]=new byte[512] ;   
-      bytes=modelXml.getBytes() ;  
-      int b=bytes.length ;   
-      
-	try {
-		fos = new FileOutputStream(bpmnModel) ;
-		fos.write(bytes,0,b) ;
-		
-		logger.info("Model writes to file successfully");
-	    
-	} catch (FileNotFoundException e) {
-		// TODO Auto-generated catch block
-		logger.info("FileNotFoundException: "+e) ;
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		logger.info("IO Exception: "+e) ;
-	} finally {
-		if(fos != null)
-			try {
-				fos.close() ;
-				logger.info("FileOutputStream is closed ") ;
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace() ;
-				logger.info("FileOutputStream is closed failure: "+e) ;
-			}
-	}
 
-  }
-  
-  /*
-   * Get resource path
-   */
-  public String getResourcePath() {
-	  String path = ModelParse.class.getClassLoader().getResource("").getPath() ;
-	  logger.info("Get Resource Path: "+path) ;
-	  return path ;
-  }
 
   @Before
   public void loadProcess() {
@@ -408,9 +352,9 @@ public class ModelParse {
 		
 	  modelInstance = Bpmn.readModelFromStream(in);
 	  System.out.println("数据输入成功") ;
-	  parseSpout();
-	  parseBolt();
-	  parseGrouping();
+	  System.out.println("解析spout:"+parseSpout());
+	  System.out.println("解析bolt:"+parseBolt());
+	  System.out.println("解析边:"+parseGrouping());
 	  return "success";
   
   }

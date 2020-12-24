@@ -1,6 +1,6 @@
 package com.mon4cc.service;
 
-import com.mon4cc.entity.Grouping;
+import com.mon4cc.entity.Flow;
 
 /**
  * <p>
@@ -10,11 +10,11 @@ import com.mon4cc.entity.Grouping;
  * @author yangsanhe
  * @since 2020-12-19
  */
-public interface IGroupingService{
+public interface IFlowService {
 
-    boolean insert_batch(Grouping grouping1);
+    boolean insert_batch(Flow grouping1);
 
     boolean select_batch(String groupingId);
 
-    boolean update_batch(Grouping grouping1);
+    boolean update_batch(Flow grouping1);
 }

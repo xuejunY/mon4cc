@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mon4cc.mapper.KafkaspoutMapper">
 
-    <!-- 通用查询映射结果 -->
+
     <resultMap id="BaseResultMap" type="com.mon4cc.entity.KafkaSpout">
         <id column="id" property="id" />
         <result column="spoutComponentName" property="spoutComponentName" />
@@ -23,11 +23,11 @@
     <insert id="addKafkaSpout" parameterType='KafkaSpout'>
         insert into kafkaspout (id,spoutComponentName,spoutParallelism,kafkaSpoutStream,boostrapServer,
         maxPollRecord,autoCommit,groupId,offsetReset,topic,topologyId)
-        values (#{id},#{spoutComponentName},#(spoutParallelism),#{kafkaSpoutStream},#{boostrapServer},
+        values (#{id},#{spoutComponentName},#{spoutParallelism},#{kafkaSpoutStream},#{boostrapServer},
         #{maxPollRecord},#{autoCommit},#{groupId},#{offsetReset},#{topic},#{topologyId})
     </insert>
 
-    <select id="selectKafkaSpout" resultType="KafkaSpout">
+    <select id="selectKafkaSpout" resultMap="BaseResultMap">
         select * from kafkaspout where id = #{id}
     </select>
 

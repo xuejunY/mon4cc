@@ -1,5 +1,6 @@
 package com.mon4cc.mapper;
 
+import com.mon4cc.entity.Flow;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +13,11 @@ import org.springframework.stereotype.Service;
  * @since 2020-12-19
  */
 @Service
-public interface TopologyconfigurationMapper{
+public interface FlowMapper {
 
-    int addXml(String tid, String modelXml);
-    String getXml(String tid) ;
+    int insertGrouping(Flow grouping);
+
+    Flow selectGrouping(@Param("groupingId") String groupingId);
+
+    int updateGrouping(Flow grouping);
 }

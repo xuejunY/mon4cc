@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mon4cc.mapper.SpoutMapper">
 
-    <!-- 通用查询映射结果 -->
+
     <resultMap id="BaseResultMap" type="com.mon4cc.entity.Spout">
         <id column="id" property="id" />
         <result column="spoutComponentName" property="spoutComponentName" />
@@ -17,7 +17,7 @@
 
     <insert id="insertSpout" parameterType='Spout'>
         insert into spout (id,spoutComponentName,spoutParallelism,spoutStream,topologyId)
-        values (#{id},#{spoutComponentName},#(spoutParallelism),#{spoutStream},#{topologyId})
+        values (#{id},#{spoutComponentName},#{spoutParallelism},#{spoutStream},#{topologyId})
     </insert>
 
 </mapper>

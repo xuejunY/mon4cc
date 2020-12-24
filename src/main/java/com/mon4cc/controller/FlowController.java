@@ -14,6 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/grouping")
-public class GroupingController {
+public class FlowController {
 
 }
