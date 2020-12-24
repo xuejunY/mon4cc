@@ -2,7 +2,10 @@ package com.mon4cc.service;
 
 import com.mon4cc.entity.Bolt;
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> branch 'master' of https://github.com/xuejunY/mon4cc.git
 /**
  * <p>
  *  服务类

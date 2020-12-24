@@ -107,7 +107,7 @@
                     <include>**/*.xml</include>
                     <include>**/*.yml</include>
                 </includes>
-                <filtering>true</filtering>
+                <!-- <filtering>false</filtering> -->
             </resource>
         
             <resource>
@@ -117,7 +117,7 @@
                     <include>**/*.xml</include>
                     <include>**/*.yml</include>
                 </includes>
-                <filtering>true</filtering>
+                <!-- <filtering>false</filtering> -->
             </resource>
 
         </resources>

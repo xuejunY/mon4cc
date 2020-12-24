@@ -1,8 +1,10 @@
 package com.mon4cc.mapper;
 
 
-import com.mon4cc.entity.Bolt;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
+
+import com.mon4cc.entity.Bolt;
 
 
 /**
@@ -18,7 +20,7 @@ public interface BoltMapper{
 
     int insertBolt(Bolt bolt);
 
-    Bolt selectBolt(String  id);
+    Bolt selectBolt(@Param("id") String  id);
 
     int updateBolt(Bolt bolt);
 }

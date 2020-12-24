@@ -19,7 +19,7 @@
         values (#{id},#{boltComponentName},#(boltParallelism),#{boltStream},#{topologyId})
     </insert>
     
-    <select id="selectBolt" resultType="Bolt">
+    <select id="selectBolt" resultMap="BaseResultMap">
         select * from bolt where id = #{id}
     </select>
 

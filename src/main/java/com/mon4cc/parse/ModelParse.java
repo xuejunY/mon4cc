@@ -23,11 +23,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 
+<<<<<<< HEAD
+
+=======
 import com.mon4cc.entity.Bolt;
 import com.mon4cc.entity.Grouping;
 import com.mon4cc.entity.KafkaSpout;
 import com.mon4cc.entity.Spout;
 import com.mon4cc.service.*;
+>>>>>>> branch 'master' of https://github.com/xuejunY/mon4cc.git
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.camunda.bpm.model.bpmn.Bpmn;
@@ -40,7 +44,17 @@ import org.camunda.bpm.model.bpmn.instance.StartEvent;
 import org.camunda.bpm.model.bpmn.instance.Task;
 import org.junit.Before;
 
+import com.mon4cc.entity.Bolt;
+import com.mon4cc.entity.Grouping;
+import com.mon4cc.entity.KafkaSpout;
+import com.mon4cc.entity.Spout;
 import com.mon4cc.parse.entity.ModelParseDTO;
+import com.mon4cc.service.IBoltService;
+import com.mon4cc.service.IGroupingService;
+import com.mon4cc.service.IKafkaspoutService;
+import com.mon4cc.service.ISpoutService;
+import com.mon4cc.service.ITopologyconfigurationService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.MultipartFile;
@@ -401,8 +415,9 @@ public class ModelParse {
 			}
 		
 	  modelInstance = Bpmn.readModelFromStream(in);
-	  parseBolt();
+	  System.out.println("数据输入成功") ;
 	  parseSpout();
+	  parseBolt();
 	  parseGrouping();
 	  return "success";
   
