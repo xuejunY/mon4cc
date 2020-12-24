@@ -82,6 +82,7 @@ public class ModelParse {
 		String modelxml=iTopologyconfigurationService.selectXml(tid) ;
 		modelInstance=Bpmn.readModelFromStream(trasStringToInputStream.getInputStream(modelxml));
 		parseSpout();
+
 		parseBolt();
 		parseGrouping();
 	  return "success" ;
@@ -113,7 +114,7 @@ public class ModelParse {
 		  bolt1.setBoltParallelism(boltParallelism);
 		  bolt1.setBoltStream(boltStream);
 		  bolt1.setBoltComponentName(boltComponentName);
-		  bolt1.setTopologyId(tid);
+		  bolt1.setTopologyId("sd");
 
 		  if (iBoltService.select_batch(bolt1.getId())){
 			  iBoltService.update_batch(bolt1);
@@ -355,8 +356,8 @@ public class ModelParse {
 		
 	  modelInstance = Bpmn.readModelFromStream(in);
 	  System.out.println("数据输入成功") ;
-	  System.out.println("解析spout:"+parseSpout());
-//	  System.out.println("解析bolt:"+parseBolt());
+//	  System.out.println("解析spout:"+parseSpout());
+	  System.out.println("解析bolt:"+parseBolt());
 //	  System.out.println("解析边:"+parseGrouping());
 	  return "success";
   
