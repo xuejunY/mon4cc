@@ -4,7 +4,8 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.mon4cc.entity.Bolt">
-        <id column="id" property="id" />
+       <!-- <id column="id" property="id" />-->
+        <result column="id" property="id" />
         <result column="boltComponentName" property="boltComponentName" />
         <result column="boltParallelism" property="boltParallelism" />
         <result column="boltStream" property="boltStream" />

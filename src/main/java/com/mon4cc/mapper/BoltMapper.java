@@ -22,7 +22,7 @@ public interface BoltMapper{
 
     int insertBolt(Bolt bolt);
 
-    Bolt selectBolt(@Param("id") String  id);
+    Bolt selectBolt(String  id);
 
     int updateBolt(Bolt bolt);
 }
