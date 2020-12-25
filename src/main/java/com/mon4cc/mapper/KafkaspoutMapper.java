@@ -17,7 +17,7 @@ public interface KafkaspoutMapper {
 	
 	boolean addKafkaSpout(KafkaSpout kafkaSpout) ;
 
-	KafkaSpout selectKafkaSpout(@Param("id") String id);
+	KafkaSpout selectKafkaSpout(@Param("id") String id,@Param("topologyId") String topologyId);
 
 	boolean updateKafkaSpout(KafkaSpout kafkaSpout);
 

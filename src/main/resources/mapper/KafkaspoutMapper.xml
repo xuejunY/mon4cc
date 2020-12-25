@@ -27,8 +27,8 @@
         #{maxPollRecord},#{autoCommit},#{groupId},#{offsetReset},#{topic},#{topologyId})
     </insert>
 
-    <select id="selectKafkaSpout" resultMap="BaseResultMap">
-        select * from kafkaspout where id = #{id}
+    <select id="selectKafkaSpout" resultType="KafkaSpout">
+        select * from kafkaspout where id = #{id} and topologyId = #{topologyId}
     </select>
 
     <update id="updateKafkaSpout" parameterType="KafkaSpout">

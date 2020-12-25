@@ -30,8 +30,8 @@ public class BoltServiceImpl implements IBoltService {
     }
 
     @Override
-    public boolean select_batch(String id) {
-        if(boltMapper.selectBolt(id)!=null){
+    public boolean select_batch(String id,String topologyId) {
+        if(boltMapper.selectBolt(id,topologyId)!=null){
             return true;
         }else return false;
     }

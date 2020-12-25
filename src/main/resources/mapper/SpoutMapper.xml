@@ -20,4 +20,14 @@
         values (#{id},#{spoutComponentName},#{spoutParallelism},#{spoutStream},#{topologyId})
     </insert>
 
+    <select id="selectSpout" resultType="Spout">
+        select * from spout where id=#{id} and topologyId = #{topologyId}
+    </select>
+
+    <update id="updateSpout" parameterType="Spout">
+        update spout set spoutComponentName = #{spoutComponentName},spoutParallelism=#{spoutParallelism},
+        spoutStream = #{spoutStream}
+        where id = #{id} and topologyId = #{topologyId}
+    </update>
+
 </mapper>

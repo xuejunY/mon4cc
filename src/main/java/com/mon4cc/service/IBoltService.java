@@ -14,7 +14,7 @@ import com.mon4cc.entity.Bolt;
 public interface IBoltService{
     boolean insert_batch(Bolt bolt);
 
-    boolean select_batch(String id);
+    boolean select_batch(String id,String topologyId);
 
     boolean update_batch(Bolt bolt1);
 }

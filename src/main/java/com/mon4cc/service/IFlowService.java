@@ -14,7 +14,7 @@ public interface IFlowService {
 
     boolean insert_batch(Flow grouping1);
 
-    boolean select_batch(String groupingId);
+    boolean select_batch(String groupingId,String topologyId);
 
     boolean update_batch(Flow grouping1);
 }

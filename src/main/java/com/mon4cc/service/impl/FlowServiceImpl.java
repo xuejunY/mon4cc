@@ -27,8 +27,8 @@ public class FlowServiceImpl implements IFlowService {
     }
 
     @Override
-    public boolean select_batch(String groupingId) {
-        if(groupingMapper.selectGrouping(groupingId)!=null){
+    public boolean select_batch(String groupingId,String topologyId) {
+        if(groupingMapper.selectGrouping(groupingId,topologyId)!=null){
             return true;
         }else return false;
     }
