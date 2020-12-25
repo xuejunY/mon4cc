@@ -27,11 +27,8 @@ import org.apache.logging.log4j.Logger;
 import org.camunda.bpm.model.bpmn.Bpmn;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 
-import org.camunda.bpm.model.bpmn.instance.IntermediateThrowEvent;
-import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
+import org.camunda.bpm.model.bpmn.instance.*;
 
-import org.camunda.bpm.model.bpmn.instance.StartEvent;
-import org.camunda.bpm.model.bpmn.instance.Task;
 import org.junit.Before;
 
 import com.mon4cc.entity.Bolt;
@@ -79,13 +76,14 @@ public class ModelParse {
 
 	public String parseModel(String tid) {
 		//根据tid从数据库查出model
-		this.tid = tid;
+		this.tid = tid ;
 		String modelxml=iTopologyconfigurationService.selectXml(tid) ;
-		modelInstance=Bpmn.readModelFromStream(trasStringToInputStream.getInputStream(modelxml));
-		parseSpout();
-
-		parseBolt();
-		parseGrouping();
+		modelInstance=Bpmn.readModelFromStream(trasStringToInputStream.getInputStream(modelxml)) ;
+		parseSpout() ;
+		parseKafkaSpout() ;
+		parseEndBolt() ;
+		parseBolt() ;
+		parseGrouping() ;
 	  return "success" ;
 	}
 
@@ -122,12 +120,48 @@ public class ModelParse {
 		  }else {
 			  iBoltService.insert_batch(bolt1);
 		  }
-
-		  logger.info("Component Name: {}, Bolt Parallelism: {}",boltComponentName,boltParallelism) ;
+//		  logger.info("Component Name: {}, Bolt Parallelism: {}",boltComponentName,boltParallelism) ;
 	  }
 	  flag = true ;
 	  return flag ;
   }
+
+	/**
+	 *  Get bolt configuration based on BPMN end event,
+	 *  and insert into database ;
+	 * @return true if parse success else false
+	 */
+  public boolean parseEndBolt(){
+  	boolean flag = false ;
+
+  	Collection<EndEvent> bolts = modelInstance.getModelElementsByType(EndEvent.class) ;
+
+	  for(EndEvent bolt: bolts) {
+		  String medDatas = bolt.getId() ;
+		  String[]data = medDatas.split("_") ;
+
+		  /*boltId, boltParallelism boltComponentName are need save to databased*/
+		  String boltId = data[0]+"_"+data[1] ;
+		  Integer boltParallelism = Integer.parseInt(data[2]) ;
+
+		  String boltComponentName = bolt.getName() ;
+		  Bolt bolt1 = new Bolt();
+		  bolt1.setId(boltId);
+		  bolt1.setBoltParallelism(boltParallelism);
+		  bolt1.setBoltStream("");
+		  bolt1.setBoltComponentName(boltComponentName);
+		  bolt1.setTopologyId(tid);
+
+		  if (iBoltService.select_batch(bolt1.getId(),tid)){
+			  iBoltService.update_batch(bolt1);
+		  }else {
+			  iBoltService.insert_batch(bolt1);
+		  }
+//		  logger.info("Component Name: {}, Bolt Parallelism: {}",boltComponentName,boltParallelism) ;
+	  }
+  	return flag ;
+  }
+
   /*
    * Get grouping and stream configuration based on BPMN sequenceFlow,
    * and insert into database ;
@@ -162,11 +196,7 @@ public class ModelParse {
 		  }else {
 			  iFlowService.insert_batch(flow1);
 		  }
-
-
-
-
-		  logger.info("Grouping: {}, Stream: {},Source: {},Target: {}",grouping,stream,sourceComponent,targetComponent) ;
+//		  logger.info("Grouping: {}, Stream: {},Source: {},Target: {}",grouping,stream,sourceComponent,targetComponent) ;
 	  }
 	  flag = true ;
 	  
@@ -205,23 +235,10 @@ public class ModelParse {
 			 }else {
 				 iSpoutService.insert_batch(spout1);
 			 }
-
-
-			 
-			 logger.info("Parallelism: {}, ComponentName: {}",spoutParallelism,spoutComponentName) ;
-			 /*
-			 Collection<SequenceFlow> outGroupings = spout.getOutgoing() ;
-			 for(SequenceFlow outGrouping: outGroupings) {
-				String[]groupingAndStream = outGrouping.getName().split("_") ;
-				String group = groupingAndStream[0] ;
-				String stream = groupingAndStream[1] ;
-			 }
-			 */
+//			 logger.info("Parallelism: {}, ComponentName: {}",spoutParallelism,spoutComponentName) ;
 		 }
 	  flag = true ;
-	  
 	  return flag ;
-			  
   }
   
   /*
@@ -278,74 +295,20 @@ public class ModelParse {
 		 }else {
 			 iKafkaspoutService.insert_batch(kafkaSpout1);
 		 }
-
-
-//		 System.out.println("Component Name :"+componentName+", parallelism: "+parallelism+", bootstrap.servers: "+
-//		 kafkaBootstrapAddress+"\n"+"max.poll.records: "+maxPollRecords+", enable.auto.commit: "+enableAutoCommit+
-//		 ", group.id: "+groupId+", auto.offset.reset: "+autoOffsetReset) ;
+		 /*
 		 logger.info("Component Name :{}, parallelism: {}, bootstrap.servers: {},max.poll.records: {}, enable.auto.commit: {}, "
 		 		+ "group.id: {}, auto.offset.reset: {}, topic: {}",kafkaSpoutComponentName,parallelism,kafkaBootstrapAddress
 		 		,maxPollRecords,enableAutoCommit,groupId,autoOffsetReset,topic) ;
-		 //kafka spout outgoing grouping
-		 /*
-		 Collection<SequenceFlow> outGroupings = spout.getOutgoing() ;
-		 for(SequenceFlow outGrouping: outGroupings) {
-			String[]groupingAndStream = outGrouping.getName().split("_") ;
-			String group = groupingAndStream[0] ;
-			String stream = groupingAndStream[1] ;
-		 }
-		 */
+
+		  */
 	 }
 	 flag = true ;
-	 
 	 return flag ;
-
  }
+
  /*
- public void parseKafkaSpout(KafkaSpout kfks) {
-	 
-	 kafkaSpouts = modelInstance.getModelElementsByType(IntermediateThrowEvent.class) ;
-	 for(IntermediateThrowEvent spout : kafkaSpouts) {
-		 String kafkaSpout = spout.getId() ;
-		 kfks.componentName.add(spout.getName()) ;
-		 String[] datas = kafkaSpout.split("_") ;
-		 
-		 kfks.parallelism.add(Integer.parseInt(datas[2])) ;
-		 //kafka spout configuration
-		 //bootstrap.servers
-		 kfks.kafkaBootstrapAddress.add(datas[3].replace('-', ':')) ;
-		 //max.poll.records
-		 kfks.maxPollRecords.add(Integer.parseInt(datas[4])) ;
-		 //enable.auto.commit
-		 kfks.enableAutoCommit.add(Boolean.parseBoolean(datas[5])) ;
-		 //group.id
-		 kfks.groupId.add(datas[6]) ;
-		 //auto.offset.reset
-		 kfks.autoOffsetReset.add(datas[7]) ;
-
-		 //kafka spout outgoing grouping
-		 Collection<SequenceFlow> outGroupings = spout.getOutgoing() ;
-		 for(SequenceFlow outGrouping: outGroupings) {
-			 
-		 }
-	 }
-	 	logger.info("Parse Kafka Spout successeflly");
-
- }
- */
-
-
-  @Before
-  public void loadProcess() {
-    // read a BPMN model from an input stream
-	 /*
-    modelInstance = Bpmn.readModelFromStream(getClass().getClassLoader().getResourceAsStream(topologyName+".bpmn")) ;
-    logger.info("Read a BPMN model from an input stream ") ;
-    */
-	  modelInstance = Bpmn.readModelFromStream(getClass().getClassLoader().getResourceAsStream("demo.bpmn"));
-  }
-
-  
+ test rest api
+  */
   public String parseXml(MultipartFile xmlFile) {
 	  InputStream in = null ;
 			try {
@@ -361,7 +324,6 @@ public class ModelParse {
 	  System.out.println("解析bolt:"+parseBolt());
 //	  System.out.println("解析边:"+parseGrouping());
 	  return "success";
-  
   }
 
 }

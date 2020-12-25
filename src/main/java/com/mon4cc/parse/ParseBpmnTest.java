@@ -28,7 +28,6 @@ import org.camunda.bpm.model.bpmn.instance.EndEvent;
 import org.camunda.bpm.model.bpmn.instance.ExtensionElements;
 import org.camunda.bpm.model.bpmn.instance.FlowNode;
 import org.camunda.bpm.model.bpmn.instance.Gateway;
-import org.camunda.bpm.model.bpmn.instance.IntermediateThrowEvent;
 import org.camunda.bpm.model.bpmn.instance.Script;
 import org.camunda.bpm.model.bpmn.instance.ScriptTask;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
@@ -52,7 +51,7 @@ public class ParseBpmnTest {
   @Before
   public void loadProcess() {
     // read a BPMN model from an input stream
-    modelInstance = Bpmn.readModelFromStream(getClass().getClassLoader().getResourceAsStream("demo3.bpmn"));
+    modelInstance = Bpmn.readModelFromStream(getClass().getClassLoader().getResourceAsStream("endevent.bpmn"));
   }
 
   @Test
@@ -82,22 +81,19 @@ public class ParseBpmnTest {
 
   @Test
   /*
-   *  You can access elements by their type.
+   *  get end bolt for parse;
    */
   public void findElementByType() {
-	  Collection<Task> bolts = modelInstance.getModelElementsByType(Task.class) ;
-	  for(Task bolt: bolts) {
-		 String medDatas = bolt.getId() ;
-		 String[]data = medDatas.split("_") ;
-		 
-		 /*boltId, boltParallelism boltComponentName are need save to databased*/
-		 String boltId = data[0]+"_"+data[1] ;
-		 Integer boltParallelism = Integer.parseInt(data[2]) ;
-		 
-		 String boltStream = data[3] ;
-		 
-		 String boltComponentName = bolt.getName() ;
-		 System.out.println(boltComponentName+" "+boltParallelism+" "+boltStream+" "+boltId) ;
+	  Collection<EndEvent> bolts = modelInstance.getModelElementsByType(EndEvent.class) ;
+	  for(EndEvent bolt: bolts) {
+        String medDatas = bolt.getId() ;
+        String[]data = medDatas.split("_") ;
+
+        /*boltId, boltParallelism boltComponentName are need save to databased*/
+        String boltId = data[0]+"_"+data[1] ;
+        Integer boltParallelism = Integer.parseInt(data[2]) ;
+
+        String boltComponentName = bolt.getName() ;
 		
 	  	}
 	 }
