@@ -13,13 +13,13 @@
         <result column="creater" property="creater" />
         <result column="createTime" property="createTime" />
     </resultMap>
-    <update id="addXml" parameterType="TopologyConfiguration">
+    <update id="addXml" parameterType="java.lang.String">
         update topologyconfiguration set topologyXml = #{modelXml}
         where topologyId = #{tid}
     </update>
 
 
-    <select id="getXml" >
+    <select id="getXml" parameterType="java.lang.String" resultType="java.lang.String">
         select topologyXml from topologyconfiguration where topologyId=#{tid}
     </select>
 

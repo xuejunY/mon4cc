@@ -18,7 +18,7 @@ public interface SpoutMapper{
 
     void insertSpout(Spout spout);
 
-    Spout selectSpout(@Param("id") String id);
+    Spout selectSpout(@Param("id") String id,@Param("topologyId") String topologyId);
 
     boolean updateSpout(Spout spout);
 }

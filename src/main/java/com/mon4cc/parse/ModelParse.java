@@ -79,6 +79,7 @@ public class ModelParse {
 
 	public String parseModel(String tid) {
 		//根据tid从数据库查出model
+		this.tid = tid;
 		String modelxml=iTopologyconfigurationService.selectXml(tid) ;
 		modelInstance=Bpmn.readModelFromStream(trasStringToInputStream.getInputStream(modelxml));
 		parseSpout();
@@ -114,9 +115,9 @@ public class ModelParse {
 		  bolt1.setBoltParallelism(boltParallelism);
 		  bolt1.setBoltStream(boltStream);
 		  bolt1.setBoltComponentName(boltComponentName);
-		  bolt1.setTopologyId("sd");
+		  bolt1.setTopologyId(tid);
 
-		  if (iBoltService.select_batch(bolt1.getId())){
+		  if (iBoltService.select_batch(bolt1.getId(),tid)){
 			  iBoltService.update_batch(bolt1);
 		  }else {
 			  iBoltService.insert_batch(bolt1);
@@ -156,7 +157,7 @@ public class ModelParse {
 		  flow1.setGroupingType(grouping);
 		  flow1.setStream(stream);
 		  flow1.setTopologyId(tid);
-		  if (iFlowService.select_batch(flow1.getGroupingId())){
+		  if (iFlowService.select_batch(flow1.getGroupingId(),tid)){
 			  iFlowService.update_batch(flow1);
 		  }else {
 			  iFlowService.insert_batch(flow1);
@@ -199,7 +200,7 @@ public class ModelParse {
 			 spout1.setSpoutStream(spoutStream);
 			 spout1.setSpoutComponentName(spoutComponentName);
 			 spout1.setTopologyId(tid);
-			 if (iSpoutService.select_batch(spout1.getId())){
+			 if (iSpoutService.select_batch(spout1.getId(),tid)){
 				 iSpoutService.update_batch(spout1);
 			 }else {
 				 iSpoutService.insert_batch(spout1);
@@ -272,7 +273,7 @@ public class ModelParse {
 		 kafkaSpout1.setTopic(topic);
 		 kafkaSpout1.setTopologyId(tid);
 
-		 if (iKafkaspoutService.select_batch(kafkaSpout1.getId())){
+		 if (iKafkaspoutService.select_batch(kafkaSpout1.getId(),tid)){
 			 iKafkaspoutService.update_batch(kafkaSpout1);
 		 }else {
 			 iKafkaspoutService.insert_batch(kafkaSpout1);

@@ -14,7 +14,7 @@ public interface IKafkaspoutService{
 
     boolean insert_batch(KafkaSpout kafkaSpout);
 
-    boolean select_batch(String id);
+    boolean select_batch(String id,String topologyId);
 
     boolean update_batch(KafkaSpout kafkaSpout);
 }

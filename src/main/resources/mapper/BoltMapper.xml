@@ -19,8 +19,8 @@
         values (#{id},#{boltComponentName},#{boltParallelism},#{boltStream},#{topologyId})
     </insert>
     
-    <select id="selectBolt" resultMap="BaseResultMap">
-        select * from bolt where id = #{id}
+    <select id="selectBolt" resultType="Bolt">
+        select * from bolt where id = #{id} and topologyId = #{topologyId}
     </select>
 
     <update id="updateBolt" parameterType="Bolt">

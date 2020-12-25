@@ -27,8 +27,8 @@ public class SpoutServiceImpl implements ISpoutService {
     }
 
     @Override
-    public boolean select_batch(String id) {
-        if(spoutMapper.selectSpout(id)!=null){
+    public boolean select_batch(String id,String topologyId) {
+        if(spoutMapper.selectSpout(id,topologyId)!=null){
             return true;
         }else return false;
     }

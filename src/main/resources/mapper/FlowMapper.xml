@@ -17,8 +17,8 @@
         values (#{groupingId},#{sourceComponent},#{targetComponent},#{groupingType},#{stream},#{topologyId})
     </insert>
 
-    <select id="selectGrouping" resultMap="BaseResultMap">
-        select * from flow where groupingId = #{groupingId}
+    <select id="selectGrouping" resultType="Flow">
+        select * from flow where groupingId = #{groupingId} and topologyId = #{topologyId}
     </select>
 
     <update id="updateGrouping" parameterType="Flow">

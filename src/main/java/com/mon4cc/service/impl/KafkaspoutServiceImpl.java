@@ -29,8 +29,8 @@ public class KafkaspoutServiceImpl implements IKafkaspoutService {
     }
 
     @Override
-    public boolean select_batch(String id) {
-        if(kafkaspoutMapper.selectKafkaSpout(id)!=null){
+    public boolean select_batch(String id,String topologyId) {
+        if(kafkaspoutMapper.selectKafkaSpout(id,topologyId)!=null){
             return true;
         }else return false;
     }
