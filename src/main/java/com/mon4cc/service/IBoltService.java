@@ -2,6 +2,8 @@ package com.mon4cc.service;
 
 import com.mon4cc.entity.Bolt;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -17,4 +19,6 @@ public interface IBoltService{
     boolean select_batch(String id,String topologyId);
 
     boolean update_batch(Bolt bolt1);
+
+    Bolt selectBolt(String topologyId) ;
 }

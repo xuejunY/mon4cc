@@ -6,7 +6,7 @@ import com.mon4cc.entity.Bolt;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
-
+import java.util.List;
 
 
 /**
@@ -25,4 +25,11 @@ public interface BoltMapper{
     Bolt selectBolt(@Param("id") String id,@Param("topologyId") String topologyId);
 
     int updateBolt(Bolt bolt);
+
+    /**
+     *
+     * @param topologyId
+     * @return Bolt
+     */
+    Bolt selectBoltForCode(@Param("topologyId") String topologyId) ;
 }

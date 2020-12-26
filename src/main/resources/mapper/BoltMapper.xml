@@ -23,6 +23,10 @@
         select * from bolt where id = #{id} and topologyId = #{topologyId}
     </select>
 
+    <select id="selectBoltForCode" resultType="Bolt">
+        select * from bolt where topologyId = #{topologyIdd}
+    </select>
+
     <update id="updateBolt" parameterType="Bolt">
         update bolt set boltComponentName = #{boltComponentName},boltParallelism = #{boltParallelism},
         boltStream = #{boltStream}

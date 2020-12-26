@@ -9,6 +9,8 @@ import com.mon4cc.service.IBoltService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -40,5 +42,10 @@ public class BoltServiceImpl implements IBoltService {
     public boolean update_batch(Bolt bolt) {
         boltMapper.updateBolt(bolt);
         return true;
+    }
+
+    @Override
+    public Bolt selectBolt(String topologyId) {
+        return boltMapper.selectBoltForCode(topologyId);
     }
 }
