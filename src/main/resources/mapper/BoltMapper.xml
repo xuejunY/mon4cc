@@ -27,10 +27,23 @@
         select * from bolt where topologyId = #{topologyIdd}
     </select>
 
+    <select id="boltNumber" resultType="Bolt">
+        select count(*) from bolt where topologyId = #{topologyIdd}
+    </select>
+
     <update id="updateBolt" parameterType="Bolt">
         update bolt set boltComponentName = #{boltComponentName},boltParallelism = #{boltParallelism},
         boltStream = #{boltStream}
         where id = #{id} and topologyId = #{topologyId}
+    </update>
+
+    <select id="selectBoltById">
+        select * from bolt where topologyId = #{topologyIdd}
+    </select>
+    insertCodeIntoBoltTable
+    <update id="updateCodeIntoBoltTable" >
+        update bolt set boltCode = #{boltCode}
+        where id = #{id}
     </update>
 
 </mapper>

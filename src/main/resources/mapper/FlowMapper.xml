@@ -21,6 +21,10 @@
         select * from flow where groupingId = #{groupingId} and topologyId = #{topologyId}
     </select>
 
+    <select id="selectGroupingId" >
+        select * from flow where targetComponent = #{targetComponent}
+    </select>
+
     <update id="updateGrouping" parameterType="Flow">
         update flow set sourceComponent = #{sourceComponent},targetComponent = #{targetComponent},
         groupingType = #{groupingType},stream = #{stream}

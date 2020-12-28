@@ -21,4 +21,10 @@ public interface IBoltService{
     boolean update_batch(Bolt bolt1);
 
     Bolt selectBolt(String topologyId) ;
+
+    int boltCount(String topologyId) ;
+
+    List<Bolt> selectBoltByTopologyId(String topologyId) ;
+
+    boolean updateCode(String id, String code) ;
 }

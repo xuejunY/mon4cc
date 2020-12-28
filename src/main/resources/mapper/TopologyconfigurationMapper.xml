@@ -23,4 +23,9 @@
         select topologyXml from topologyconfiguration where topologyId=#{tid}
     </select>
 
+    <select id="getTopologyName" parameterType="java.lang.String" resultType="java.lang.String">
+        select topologyName from topologyconfiguration where topologyId=#{tid}
+    </select>
+
+
 </mapper>

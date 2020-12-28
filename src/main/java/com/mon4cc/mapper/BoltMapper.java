@@ -32,4 +32,10 @@ public interface BoltMapper{
      * @return Bolt
      */
     Bolt selectBoltForCode(@Param("topologyId") String topologyId) ;
+
+    int boltNumber(@Param("topologyId") String topologyId) ;
+
+    List<Bolt> selectBoltById(String topologyId) ;
+
+    boolean updateCodeIntoBoltTable(String id,String code) ;
 }

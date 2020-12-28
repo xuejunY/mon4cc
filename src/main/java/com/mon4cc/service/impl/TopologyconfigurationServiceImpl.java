@@ -33,5 +33,10 @@ public class TopologyconfigurationServiceImpl implements ITopologyconfigurationS
         return  topologyconfigurationMapper.getXml(tid);
 
     }
+
+    @Override
+    public String getTopologyName(String tid) {
+        return topologyconfigurationMapper.getTopologyName(tid) ;
+    }
 }
 

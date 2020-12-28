@@ -17,4 +17,9 @@ public interface IFlowService {
     boolean select_batch(String groupingId,String topologyId);
 
     boolean update_batch(Flow grouping1);
+
+    Flow selectFlow(String groupingId,String topologyId) ;
+
+    String getFlowIdByTarget(String targetComponent) ;
+
 }

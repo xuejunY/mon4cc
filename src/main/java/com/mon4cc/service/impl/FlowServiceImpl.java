@@ -38,5 +38,15 @@ public class FlowServiceImpl implements IFlowService {
         groupingMapper.updateGrouping(grouping);
         return true;
     }
+
+    @Override
+    public Flow selectFlow(String groupingId,String topologyId) {
+        return groupingMapper.selectGrouping(groupingId, topologyId);
+    }
+
+    @Override
+    public String getFlowIdByTarget(String targetComponent) {
+        return groupingMapper.selectGroupingId(targetComponent);
+    }
 }
 

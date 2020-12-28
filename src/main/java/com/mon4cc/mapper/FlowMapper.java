@@ -20,4 +20,6 @@ public interface FlowMapper {
     Flow selectGrouping(@Param("groupingId") String groupingId,@Param("topologyId") String topologyId);
 
     int updateGrouping(Flow grouping);
+
+    String selectGroupingId(String targetComponent) ;
 }

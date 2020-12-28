@@ -48,4 +48,30 @@ public class BoltServiceImpl implements IBoltService {
     public Bolt selectBolt(String topologyId) {
         return boltMapper.selectBoltForCode(topologyId);
     }
+
+    /**
+     * select record amount from bolt table base on topologyId
+     * @param topologyId
+     * @return
+     * @author xjyou_
+     */
+    @Override
+    public int boltCount(String topologyId) {
+        return boltMapper.boltNumber(topologyId);
+    }
+    /**
+     * select bolt list from bolt table base on topologyId
+     * @param topologyId
+     * @return
+     * @author xjyou_
+     */
+    @Override
+    public List<Bolt> selectBoltByTopologyId(String topologyId) {
+        return boltMapper.selectBoltById(topologyId);
+    }
+
+    @Override
+    public boolean updateCode(String id, String code) {
+        return boltMapper.updateCodeIntoBoltTable(id,code);
+    }
 }
