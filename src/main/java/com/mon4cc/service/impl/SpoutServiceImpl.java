@@ -6,6 +6,8 @@ import com.mon4cc.service.ISpoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -37,6 +39,16 @@ public class SpoutServiceImpl implements ISpoutService {
     public boolean update_batch(Spout spout) {
         spoutMapper.updateSpout(spout);
         return true;
+    }
+
+    @Override
+    public List<Spout> selectSpouts(String topologyId) {
+        return spoutMapper.selectSpouts(topologyId);
+    }
+
+    @Override
+    public boolean updateCode(String id, String topologyId, String code) {
+        return spoutMapper.updateSpoutCodeIntoSpoutTable(id,topologyId,code);
     }
 }
 

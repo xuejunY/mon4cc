@@ -5,6 +5,8 @@ import com.mon4cc.entity.Spout;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -21,4 +23,8 @@ public interface SpoutMapper{
     Spout selectSpout(@Param("id") String id,@Param("topologyId") String topologyId);
 
     boolean updateSpout(Spout spout);
+
+    List<Spout> selectSpouts(@Param("topologyId")String topologyId) ;
+
+    boolean updateSpoutCodeIntoSpoutTable(@Param("id") String id,@Param("topologyId")String topologyId,@Param("completeSpoutCode") String completeSpoutCode);
 }

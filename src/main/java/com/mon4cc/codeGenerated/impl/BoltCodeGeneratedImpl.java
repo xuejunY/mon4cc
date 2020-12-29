@@ -26,12 +26,11 @@ public class BoltCodeGeneratedImpl implements IBoltCodeGenerated {
 
     private Flow flow ;
 
-
     @Autowired
     private ITopologyconfigurationService iTopologyconfigurationService ;
 
     @Autowired
-    BoltTemplate boltTemplate ;
+    private BoltTemplate boltTemplate ;
 
 
     @Override

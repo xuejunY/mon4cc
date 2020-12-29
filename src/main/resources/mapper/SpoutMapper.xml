@@ -30,4 +30,13 @@
         where id = #{id} and topologyId = #{topologyId}
     </update>
 
+    <select id="selectSpouts" resultType="Spout">
+        select * from spout where  topologyId = #{topologyId}
+    </select>
+
+    <update id="updateSpoutCodeIntoSpoutTable" >
+        update spout set completeSpoutCode = #{completeSpoutCode}
+        where id = #{id} and topologyId=#{topologyId}
+    </update>
+
 </mapper>

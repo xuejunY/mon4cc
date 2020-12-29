@@ -30,43 +30,79 @@ public class BoltTemplate {
 
 	}
 
+	private String BoltClassTextGenerator = ""
+			+ "<packageDoc>"
+			+ "<importDoc>"
+			+ "<classDoc>"
+			+ "<attrDoc>"
+			+ "<prepare>"
+			+ "<execute>"
+			+ "<declare>"
+			+ "<end>";
+	/*
+	public String generateClassText(String topologyId, String topologyNameBolt,Bolt bolt, Flow flow){
+		return BoltClassTextGenerator.replace("<packageDoc>",packageName(topologyName))
+				.replace("<importDoc>", importPackage)
+				.replace("<classDoc>",);
+	}
+	 */
+
 	/**
 	 * The template for package.
 	 * {projectName} is need replaced
 	 */
-	String packageName = "com.mon4cc.{projectName}\n"
+	private String packageName = "com.mon4cc.{projectName}\n"
 			+ "\n" ;
 	
 	/**
 	 * The template for import.
 	 */
-	String importPackage = "import java.util.*;\n"
+	private String importPackage = "import java.util.*;\n"
 			+ "import org.apache.storm.*;\n"
 			+ "import org.slf4j.*;\n"
 			+ "import log.*\n"
 			+ "\n" ;
 
-	String prepare = "\t  @Override\n"
+	/**
+	 * The template for method(#prepare)
+	 * {conf} is need replaced
+	 */
+	private String prepare = "\t  @Override\n"
 			+ "\t  public void prepare(Map stormConf, TopologyContext context, OutputCollector collector){\n"
 			+ "\t\t  {conf}\n"
 			+ "\t\t  \n"
 			+ "\t  } \n"
 			+ "\n" ;
-	
-	String execute = "\t  @Override\n"
+	/**
+	 * The template for method(#execute)
+	 * {execute} is need replaced
+	 */
+	private String execute = "\t  @Override\n"
 			+ "\t  public void execute(Tuple input) {\n"
 			+ "\t\t  {execute}\n"
 			+ "\t\t  \n"
 			+ "\t  }\n" ;
-	
-	String declareOutputFields = "\t  @Override\n"
+	/**
+	 * The template for method(#declareOutputFields)
+	 * {declare} is need replaced
+	 */
+	private String declareOutputFields = "\t  @Override\n"
 			+ "\t  public void declareOutputFields(OutputFieldsDeclarer declarer) {\n"
 			+ "\t\t  {declare}\n"
 			+ "\t\t  \n"
 			+ "\t  }\n" ;
-	String log = "private static final Logger logger = LogManager.getLogger(<className>.class) ;" ;
-	String globleConfiguration = "\t\t <globleConfiguration>" ;
-	String classMainGenerate="public class {className} extends BaseRichSpout {\n"
+
+	private String log = "private static final Logger logger = LogManager.getLogger(<className>.class) ;" ;
+	private String logEmit = "\t\t  logger.error(\"{}\", EventFactory.newEmit(<en>, TID.next(),input.getString(2), " +
+			"<sid>"+ ")) ;" ;
+
+	private String logStart = "\t\t logger.error(\"{}\", EventFactory.newTake(<en>,input.getString(1),input.getString(2), input.getString(3))) ;" ;
+
+	private String logAck = "\t\t  logger.error(\"{}\", EventFactory.newAck(<en>,input.getString(1),input.getString(2), " +
+			"<sid>"+")) ;" ;
+	private String globleConfiguration = "\t\t <globleConfiguration>" ;
+
+	private String classMainGenerate="public class {className} extends BaseRichSpout {\n"
 			+ "\n"
 			+ log
 			+ "\n"
@@ -78,20 +114,10 @@ public class BoltTemplate {
 			+ "\n"
 			+ declareOutputFields
 			+ "}\n" ;
-//	logger.error("{}", EventFactory.newEmit("BT_Split", TID.next(),input.getString(2), "S2")) ;
-
-
-	String logEmit = "\t\t  logger.error(\"{}\", EventFactory.newEmit(<en>, TID.next(),input.getString(2), " +
-			"<sid>"+ ")) ;" ;
-
-	String logStart = "\t\t logger.error(\"{}\", EventFactory.newTake(<en>,input.getString(1),input.getString(2), input.getString(3))) ;" ;
-
-	String logAck = "\t\t  logger.error(\"{}\", EventFactory.newAck(<en>,input.getString(1),input.getString(2), " +
-			"<sid>"+")) ;" ;
 
 	public String classGenerate(){
 		StringBuilder sb = new StringBuilder() ;
-		sb.append(packageName(topologyId)) ;
+		sb.append(packageName(topologyName)) ;
 		sb.append(importPackage) ;
 		sb.append(classMainGenerate()) ;
 //		return iBoltService.updateCode(bolt.getId(),sb.toString()) ;
@@ -100,12 +126,6 @@ public class BoltTemplate {
 
 
 	public String classMainGenerate(){
-//		this.classMainGenerate.replace("{className}", bolt.getBoltComponentName()) ;
-//		this.classMainGenerate.replace("<className>",log()) ;
-//		this.classMainGenerate.replace("<globleConfiguration>",globleConfiguration()) ;
-//		this.classMainGenerate.replace("{conf}",prepare()) ;
-//		this.classMainGenerate.replace("{execute}",execute()) ;
-//		this.classMainGenerate.replace("{declare}",declareOutputFields()) ;
 		return  this.classMainGenerate.replace("{className}", bolt.getBoltComponentName()).replace("<className>",log())
 				.replace("<globleConfiguration>",globleConfiguration()).replace("{conf}",prepare())
 				.replace("{execute}",execute()).replace("{declare}",declareOutputFields());
@@ -180,5 +200,6 @@ public class BoltTemplate {
 		String content = "declarer.declareStream("+stream+", new Fields("+field+",\"tid\", \"mid\",\"sid\""+"))" ;
 		return content;
 	}
+
 
 }
