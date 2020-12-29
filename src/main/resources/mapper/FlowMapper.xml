@@ -21,8 +21,8 @@
         select * from flow where groupingId = #{groupingId} and topologyId = #{topologyId}
     </select>
 
-    <select id="selectGroupingId" >
-        select * from flow where targetComponent = #{targetComponent}
+    <select id="selectGroupingId"  resultType="java.lang.String" >
+        select groupingId from flow where targetComponent = #{targetComponent}
     </select>
 
     <update id="updateGrouping" parameterType="Flow">

@@ -54,14 +54,21 @@ public class ParseController {
 
 	/**
 	 * Method (#generateCode) is used to generate code
-	 * @param topologyId
+	 * @param body
 	 * @return
 	 */
 	@PostMapping(value = "/model/generateCode")
-	public Json generateCode(@RequestBody String topologyId){
+	public Json generateCode(@RequestBody String body){
 		String oper = "generate code" ;
-
+		JSONObject jsonObject = JSON.parseObject(body);
+		String topologyId = jsonObject.getString("topologyId") ;
 		return Json.result(oper,iBoltCodeGenerated.boltCodeGenerated(topologyId)) ;
+	}
+
+	@RequestMapping(value = "/model/testCode")
+	public boolean testcod(@RequestParam("topologyId") String topologyId){
+
+		return iBoltCodeGenerated.boltCodeGenerated(topologyId) ;
 	}
 
 	/**
@@ -78,11 +85,11 @@ public class ParseController {
 
 	/**
 	 * Method (#start) is used to run topology
-	 * @param topologyId
+	 * @param body
 	 * @return
 	 */
 	@PostMapping(value = "/model/start")
-	public Json start(@RequestBody String topologyId){
+	public Json start(@RequestBody String body){
 		String oper = "start topology" ;
 
 		return Json.result(oper,true) ;

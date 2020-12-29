@@ -5,6 +5,7 @@ import com.mon4cc.entity.Flow;
 import com.mon4cc.service.IBoltService;
 import com.mon4cc.service.IFlowService;
 import com.mon4cc.service.ITopologyconfigurationService;
+import lombok.Data;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,33 +18,18 @@ import java.util.List;
  * BoltTemplate work for generate bolt code
  */
 @Component
+@Data
 public class BoltTemplate {
 
 	private String topologyId ;
-	Bolt bolt = null ;
-	Flow flow = null ;
-	public BoltTemplate() {
+	private Bolt bolt ;
+	private Flow flow  ;
+	private String topologyName ;
+
+	public BoltTemplate(){
+
 	}
 
-	public BoltTemplate(String topologyId, Bolt bolt) {
-		this.topologyId = topologyId;
-		this.bolt = bolt ;
-		//需要一个grouping id, topology id, bolt id
-		//bolt名字；这种方法只适用于一个流进入bolt
-		String inGroupingId = iFlowService.getFlowIdByTarget(bolt.getBoltComponentName()) ;
-		flow = iFlowService.selectFlow(inGroupingId,topologyId) ;
-	}
-
-	@Autowired
-	private ITopologyconfigurationService iTopologyconfigurationService ;
-
-	@Autowired
-	private IBoltService iBoltService;
-
-	@Autowired
-	private IFlowService iFlowService ;
-
-	
 	/**
 	 * The template for package.
 	 * {projectName} is need replaced
@@ -78,51 +64,60 @@ public class BoltTemplate {
 			+ "\t\t  {declare}\n"
 			+ "\t\t  \n"
 			+ "\t  }\n" ;
-	
+	String log = "private static final Logger logger = LogManager.getLogger(<className>.class) ;" ;
+	String globleConfiguration = "\t\t <globleConfiguration>" ;
 	String classMainGenerate="public class {className} extends BaseRichSpout {\n"
 			+ "\n"
-			+ log()
+			+ log
 			+ "\n"
-			+ globleConfiguration()
+			+ globleConfiguration
 			+ "\n"
-			+ prepare()
+			+ prepare
 			+ "\n"
-			+ execute()
+			+ execute
 			+ "\n"
-			+ declareOutputFields()
+			+ declareOutputFields
 			+ "}\n" ;
 //	logger.error("{}", EventFactory.newEmit("BT_Split", TID.next(),input.getString(2), "S2")) ;
 
 
 	String logEmit = "\t\t  logger.error(\"{}\", EventFactory.newEmit(<en>, TID.next(),input.getString(2), " +
-		outSid()+ ")) ;" ;
+			"<sid>"+ ")) ;" ;
 
 	String logStart = "\t\t logger.error(\"{}\", EventFactory.newTake(<en>,input.getString(1),input.getString(2), input.getString(3))) ;" ;
 
 	String logAck = "\t\t  logger.error(\"{}\", EventFactory.newAck(<en>,input.getString(1),input.getString(2), " +
-			inSid()+")) ;" ;
+			"<sid>"+")) ;" ;
 
-	public boolean classGenerate(){
+	public String classGenerate(){
 		StringBuilder sb = new StringBuilder() ;
 		sb.append(packageName(topologyId)) ;
 		sb.append(importPackage) ;
-		sb.append(classMainGenerate(bolt)) ;
-		return iBoltService.updateCode(bolt.getId(),sb.toString()) ;
+		sb.append(classMainGenerate()) ;
+//		return iBoltService.updateCode(bolt.getId(),sb.toString()) ;
+		return sb.toString() ;
 	}
 
 
-	public String classMainGenerate(Bolt bolt){
-		return classMainGenerate.replace("{className}", bolt.getBoltComponentName()) ;
+	public String classMainGenerate(){
+//		this.classMainGenerate.replace("{className}", bolt.getBoltComponentName()) ;
+//		this.classMainGenerate.replace("<className>",log()) ;
+//		this.classMainGenerate.replace("<globleConfiguration>",globleConfiguration()) ;
+//		this.classMainGenerate.replace("{conf}",prepare()) ;
+//		this.classMainGenerate.replace("{execute}",execute()) ;
+//		this.classMainGenerate.replace("{declare}",declareOutputFields()) ;
+		return  this.classMainGenerate.replace("{className}", bolt.getBoltComponentName()).replace("<className>",log())
+				.replace("<globleConfiguration>",globleConfiguration()).replace("{conf}",prepare())
+				.replace("{execute}",execute()).replace("{declare}",declareOutputFields());
 	}
 
 
-	public String packageName(String topologyId){
-		return packageName.replace("{projectName}", iTopologyconfigurationService.getTopologyName(topologyId) ) ;
+	public String packageName(String topologyName){
+		return packageName.replace("{projectName}", topologyName ) ;
 	}
 
 	public String log(){
-		String log = "private static final Logger logger = LogManager.getLogger(<className>.class) ;" ;
-		return log.replace("<className>",bolt.getBoltComponentName()) ;
+		return bolt.getBoltComponentName() ;
 	}
 
 	public String globleConfiguration(){
@@ -133,48 +128,49 @@ public class BoltTemplate {
 	public String prepare() {
 		String [] codes = getBoltSimpleCode() ;
 		String prepareCode = codes[1] ;
-		return prepare.replace("{conf}",prepareCode) ;
+		return prepareCode ;
 	}
 	
 	public String execute() {
 		String [] codes = getBoltSimpleCode() ;
 		String newEmit = codes[3] ;
-		String emit = newEmit+".add(tid,mid,stream)" ;
-		String execteCode = codes[2].replace("<logstart>",logStart())+emit+codes[4].replace("<logemit>",logEmit())
-				.replace("<logend>",logAck()) ;
+		String emit = newEmit.replace(";","")+".add(tid,mid,stream)" ;
+		String execteCode = codes[2].replace("<logstart>",logStart.replace("<en>",logStart()))+emit+codes[4].replace("<logmid>",logEmit
+				.replace("<en>",logEmit()).replace("<sid>",outSid()))
+				.replace("<logack>",logAck.replace("<sid>",inSid())) ;
 
-		return execute.replace("{execute}", execteCode) ;
+		return execteCode;
 	}
 
 	public String logEmit(){
-		return logEmit.replace("en", bolt.getBoltComponentName()) ;
+		return bolt.getBoltComponentName() ;
 	}
 
 	public String logStart(){
-		return logStart.replace("en", bolt.getBoltComponentName()) ;
+		return  bolt.getBoltComponentName() ;
 	}
 
 	public String logAck(){
-		return logAck.replace("en", bolt.getBoltComponentName()) ;
+		return  bolt.getBoltComponentName() ;
 	}
 
 	public String outSid(){
-		return "<sid>".replace("<sid>", bolt.getBoltStream()) ;
+		return bolt.getBoltStream() ;
 	}
 
 	public String inSid(){
 		String inSid = "" ;
 		if(flow.getTargetComponent().equals(bolt.getBoltComponentName())) inSid = flow.getStream() ;
-		return "<sid>".replace("<sid>",inSid ) ;
+		return inSid  ;
 	}
 	
 	
 	public String declareOutputFields() {
-		return declareOutputFields.replace("{declare}", generateDeclareMethodContent()) ;
+		return generateDeclareMethodContent() ;
 	}
 
 	public  String[] getBoltSimpleCode(){
-		return bolt.getBoltCodeSimple().split("||") ;
+		return bolt.getBoltCodeSimple().split("-") ;
 	}
 
 	public String generateDeclareMethodContent(){

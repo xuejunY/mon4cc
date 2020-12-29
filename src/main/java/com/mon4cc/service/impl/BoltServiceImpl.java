@@ -50,16 +50,6 @@ public class BoltServiceImpl implements IBoltService {
     }
 
     /**
-     * select record amount from bolt table base on topologyId
-     * @param topologyId
-     * @return
-     * @author xjyou_
-     */
-    @Override
-    public int boltCount(String topologyId) {
-        return boltMapper.boltNumber(topologyId);
-    }
-    /**
      * select bolt list from bolt table base on topologyId
      * @param topologyId
      * @return
@@ -71,7 +61,7 @@ public class BoltServiceImpl implements IBoltService {
     }
 
     @Override
-    public boolean updateCode(String id, String code) {
-        return boltMapper.updateCodeIntoBoltTable(id,code);
+    public boolean updateCode(String id, String topologyId, String code) {
+        return boltMapper.updateCodeIntoBoltTable(id, topologyId, code);
     }
 }

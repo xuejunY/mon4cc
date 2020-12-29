@@ -22,9 +22,8 @@ public interface IBoltService{
 
     Bolt selectBolt(String topologyId) ;
 
-    int boltCount(String topologyId) ;
 
     List<Bolt> selectBoltByTopologyId(String topologyId) ;
 
-    boolean updateCode(String id, String code) ;
+    boolean updateCode(String id,String topologyId, String code) ;
 }
