@@ -175,9 +175,13 @@ public class ModelParse {
 		  /* groupingId, sourceComponent,targetComponent,grouping,stream are need save database*/
 		  String groupingId = flow.getId() ;
 		  //grouping beginning which spout or bolt.
-		  String sourceComponent = flow.getSource().getName() ;
+		  //String sourceComponent = flow.getSource().getName() ;
+		  String [] sources= flow.getSource().getId().split("_") ;
+		  String sourceComponent = sources[0]+"_"+sources[1] ;
 		  //grouping ending which bolt
-		  String targetComponent = flow.getTarget().getName() ;
+		  //String targetComponent = flow.getTarget().getName() ;
+		  String []targets= flow.getTarget().getId().split("_") ;
+		  String targetComponent = targets[0]+"_"+targets[1] ;
 		  //grouping name, e.g. shuffle grouping
 		  String grouping = datas[0] ;
 		  

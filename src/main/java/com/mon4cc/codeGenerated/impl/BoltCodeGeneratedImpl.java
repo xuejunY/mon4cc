@@ -42,10 +42,11 @@ public class BoltCodeGeneratedImpl implements IBoltCodeGenerated {
 
         for(Bolt bolt : lists){
             //bolt名字；这种方法只适用于一个流进入bolt
+
             String inGroupingId = iFlowService.getFlowIdByTarget(bolt.getBoltComponentName()) ;
             flow = iFlowService.selectFlow(inGroupingId,topologyId) ;
 
-          boltTemplate.setFlow(flow);
+            boltTemplate.setFlow(flow);
 
 //            boltTemplate =new BoltTemplate(topologyId,bolt,flow,topologyName);
             boltTemplate.setTopologyName(topologyName);
