@@ -38,5 +38,15 @@ public class TopologyconfigurationServiceImpl implements ITopologyconfigurationS
     public String getTopologyName(String tid) {
         return topologyconfigurationMapper.getTopologyName(tid) ;
     }
+
+    @Override
+    public boolean getIsLocal(String topologyId) {
+        return topologyconfigurationMapper.getIsLocal(topologyId);
+    }
+
+    @Override
+    public boolean updateCode(String topologyId, String code) {
+        return topologyconfigurationMapper.updateConfigurationCodeIntoSpoutTable(topologyId,code);
+    }
 }
 

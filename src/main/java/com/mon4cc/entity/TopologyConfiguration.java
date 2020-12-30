@@ -33,5 +33,8 @@ public class TopologyConfiguration {
 	
 	/*Topology's create time*/
 	private String createTime ;
+
+	/*Topology's complete code */
+	private String completeConfigurationCode ;
 }
 

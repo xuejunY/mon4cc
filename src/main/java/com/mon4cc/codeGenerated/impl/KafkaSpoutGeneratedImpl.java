@@ -2,7 +2,6 @@ package com.mon4cc.codeGenerated.impl;
 
 import com.mon4cc.codeGenerated.IKafkaSpoutCodeGenerated;
 import com.mon4cc.entity.KafkaSpout;
-import com.mon4cc.entity.TopologyConfiguration;
 import com.mon4cc.service.IKafkaspoutService;
 import com.mon4cc.service.ITopologyconfigurationService;
 import com.mon4cc.template.KafkaSpoutTemplate;
@@ -11,6 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author xjyou_
+ * @Date 2020.12.30
+ */
 @Service
 public class KafkaSpoutGeneratedImpl implements IKafkaSpoutCodeGenerated {
 

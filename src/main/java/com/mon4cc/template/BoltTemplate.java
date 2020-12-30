@@ -69,10 +69,10 @@ public class BoltTemplate {
 	 */
 	private String prepare = "\t  @Override\n"
 			+ "\t  public void prepare(Map stormConf, TopologyContext context, OutputCollector collector){\n"
+			+ "\t\t  collector = collector"
 			+ "\t\t  {conf}\n"
 			+ "\t\t  \n"
-			+ "\t  } \n"
-			+ "\n" ;
+			+ "\t  } \n";
 	/**
 	 * The template for method(#execute)
 	 * {execute} is need replaced
@@ -101,7 +101,8 @@ public class BoltTemplate {
 
 	private String logAck = "\t\t  logger.error(\"{}\", EventFactory.newAck(<en>,input.getString(1),input.getString(2), " +
 			"<sid>"+")) ;" ;
-	private String globleConfiguration = "\t\t <globleConfiguration>" ;
+	private String globleConfiguration = "\t OutputCollector collector ;"
+			+"\t <globleConfiguration>" ;
 
 	private String classMainGenerate="public class {className} extends BaseRichSpout {\n"
 			+ "String id ; \n"
@@ -160,7 +161,7 @@ public class BoltTemplate {
 		String emit = newEmit.replace(";","")+".add(tid,mid,stream)" ;
 		String execteCode = codes[2].replace("<logstart>",logStart.replace("<en>",logStart()))+emit+codes[4].replace("<logmid>",logEmit
 				.replace("<en>",logEmit()).replace("<sid>",outSid()))
-				.replace("<logack>",logAck.replace("<sid>",inSid())) ;
+				.replace("<logack>",logAck.replace("<en>" ,logAck()).replace("<sid>",inSid())) ;
 
 		return execteCode;
 	}

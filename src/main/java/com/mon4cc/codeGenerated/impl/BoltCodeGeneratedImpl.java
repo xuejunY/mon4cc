@@ -13,7 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Class (# BoltCodeGeneratedImpl) is used to generate all bolt code
+ * @author xjyou_
+ * @Date 2020.12.26
  */
 @Service
 public class BoltCodeGeneratedImpl implements IBoltCodeGenerated {

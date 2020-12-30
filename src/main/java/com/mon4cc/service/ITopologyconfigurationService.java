@@ -14,5 +14,7 @@ public interface ITopologyconfigurationService{
     String selectXml(String tid);
 
     String getTopologyName(String tid) ;
+    boolean getIsLocal(String topologyId) ;
+    boolean updateCode(String topologyId, String code) ;
 
 }

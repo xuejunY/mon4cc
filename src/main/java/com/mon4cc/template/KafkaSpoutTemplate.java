@@ -63,6 +63,7 @@ public class KafkaSpoutTemplate {
             + "\t private static final Logger logger = LogManager.getLogger(<className>.class) ; \n"
             + "\t private static final IDGenerator MID = IDFactory.getIDGenerator(\"mid_\") ;\n"
             + "\t public static final IDGenerator TID = IDFactory.getIDGenerator(\"tid_\") ;\n"
+			+ "\t SpoutOutputCollector collector ;"
             + "\t String sid ;\n"
             + "\t String mid = null ;\n"
             + "\t String tid = null ;\n" ;
@@ -85,6 +86,7 @@ public class KafkaSpoutTemplate {
      */
     private String openMethodTemplate = "\t\t  @Override\n"
             + "\t public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {\n"
+			+ "\t  collector = collector ;\n"
             + "\t  <initialization>\n"
             + "\t  } \n" ;
 

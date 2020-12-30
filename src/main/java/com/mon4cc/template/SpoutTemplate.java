@@ -82,6 +82,7 @@ public class SpoutTemplate {
 			+ "\t\t  private static final Logger logger = LogManager.getLogger(<className>.class) ; \n"
 			+ "\t\t  private static final IDGenerator MID = IDFactory.getIDGenerator(\"mid_\") ;\n"
 			+ "\t\t  public static final IDGenerator TID = IDFactory.getIDGenerator(\"tid_\") ;\n"
+			+ "\t\t  SpoutOutputCollector collector ;\n"
 			+ "\t\t  String sid ;\n"
 			+ "\t\t  String mid = null ;\n"
 			+ "\t\t  String tid = null ;\n" ;
@@ -107,6 +108,7 @@ public class SpoutTemplate {
 	 */
 	private String openMethodTemplate = "\t\t  @Override\n"
 			+ "\t\t  public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {\n"
+			+ "\t\t    collector = collector ;\n"
 			+ "\t\t    <initialization>\n"
 			+ "\t\t  } \n" ;
 

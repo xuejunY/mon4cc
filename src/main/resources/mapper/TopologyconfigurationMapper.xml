@@ -12,6 +12,7 @@
         <result column="state" property="state" />
         <result column="creater" property="creater" />
         <result column="createTime" property="createTime" />
+        <result column="completeConfigurationCode" property="completeConfigurationCode" />
     </resultMap>
     <update id="addXml" parameterType="java.lang.String">
         update topologyconfiguration set topologyXml = #{modelXml}
@@ -27,5 +28,12 @@
         select topologyName from topologyconfiguration where topologyId=#{tid}
     </select>
 
+    <select id="getTopologyName" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        select isLocal from topologyconfiguration where topologyId=#{topologyId}
+    </select>
+    <update id="updateConfigurationCodeIntoSpoutTable" >
+        update topologyconfiguration set completeConfigurationCode = #{completeConfigurationCode}
+        where topologyId=#{topologyId}
+    </update>
 
 </mapper>
