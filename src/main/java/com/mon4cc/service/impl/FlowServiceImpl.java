@@ -47,8 +47,8 @@ public class FlowServiceImpl implements IFlowService {
     }
 
     @Override
-    public String getFlowIdByTarget(String targetComponent) {
-        return groupingMapper.selectGroupingId(targetComponent);
+    public String getFlowIdByTarget(String targetComponent, String topologyId) {
+        return groupingMapper.selectGroupingId(targetComponent,topologyId);
     }
 
     @Override

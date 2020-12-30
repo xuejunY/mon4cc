@@ -24,8 +24,8 @@ public interface KafkaspoutMapper {
 //	boolean deleteKafkaSpout(String spoutComponentName) ;
 //	boolean updateKafkaSpout(String id) ;
 	List<KafkaSpout> getAllKafkaSpouts(@Param("topologyId") String topologyId) ;
-	boolean updateSafkaSpoutCodeIntoSpoutTable(@Param("id") String id,@Param("topologyId")String topologyId,
-											   @Param("completeSpoutCode") String completeSpoutCode);
+	boolean updatekafkaSpoutCodeIntoSpoutTable(@Param("id") String id,@Param("topologyId")String topologyId,
+											   @Param("completeKafkaSpoutCode") String completeKafkaSpoutCode);
 //	KafkaSpout getKafkaSpout(String id) ;
 
 }

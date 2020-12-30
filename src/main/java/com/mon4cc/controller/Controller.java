@@ -34,7 +34,7 @@ public class Controller {
 	private ITopologyconfigurationService iTopologyconfigurationService;
 
 	@Autowired
-	private ITopologyConfigurationGenerated iTopologyConfigurationGenerated ;
+	private IKafkaSpoutCodeGenerated iKafkaSpoutCodeGenerated ;
 
 	@Autowired
 	private ICodeGenerate iCodeGenerate ;
@@ -106,6 +106,12 @@ public class Controller {
 		String oper = "kill topology" ;
 
 		return Json.result(oper,true) ;
+	}
+
+	@RequestMapping(value = "/model/testKafkaSpout")
+	public boolean test(@RequestParam("topologyId") String topologyId){
+
+		return  iKafkaSpoutCodeGenerated.kafkaSpoutCodeGenerated(topologyId) ;
 	}
 
 }

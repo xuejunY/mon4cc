@@ -41,8 +41,8 @@
     <select id="getAllKafkaSpouts" resultType="KafkaSpout">
         select * from kafkaspout where topologyId = #{topologyId}
     </select>
-    <update id="updateSafkaSpoutCodeIntoSpoutTable" >
-        update spout set completeSpoutCode = #{completeSpoutCode}
+    <update id="updatekafkaSpoutCodeIntoSpoutTable" >
+        update kafkaspout set completeKafkaSpoutCode = #{completeKafkaSpoutCode}
         where id = #{id} and topologyId=#{topologyId}
     </update>
 

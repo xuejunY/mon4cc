@@ -22,7 +22,7 @@ public interface IFlowService {
 
     Flow selectFlow(String groupingId,String topologyId) ;
 
-    String getFlowIdByTarget(String targetComponent) ;
+    String getFlowIdByTarget(String targetComponent, String topologyId) ;
 
     List<Flow> selectFlows (String topologyId) ;
 

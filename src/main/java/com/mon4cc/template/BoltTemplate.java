@@ -184,7 +184,7 @@ public class BoltTemplate {
 
 	public String inSid(){
 		String inSid = "" ;
-		if(flow.getTargetComponent().equals(bolt.getBoltComponentName())) inSid = flow.getStream() ;
+		if(flow.getTargetComponent().equals(bolt.getId())) inSid = flow.getStream() ;
 		return inSid  ;
 	}
 	

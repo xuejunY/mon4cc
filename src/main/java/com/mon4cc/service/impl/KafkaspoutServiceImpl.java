@@ -50,6 +50,6 @@ public class KafkaspoutServiceImpl implements IKafkaspoutService {
 
     @Override
     public boolean updateCode(String id, String topologyId, String code) {
-        return kafkaspoutMapper.updateSafkaSpoutCodeIntoSpoutTable(id, topologyId, code);
+        return kafkaspoutMapper.updatekafkaSpoutCodeIntoSpoutTable(id, topologyId, code);
     }
 }
