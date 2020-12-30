@@ -2,6 +2,8 @@ package com.mon4cc.service;
 
 import com.mon4cc.entity.Flow;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -21,5 +23,7 @@ public interface IFlowService {
     Flow selectFlow(String groupingId,String topologyId) ;
 
     String getFlowIdByTarget(String targetComponent) ;
+
+    List<Flow> selectFlows (String topologyId) ;
 
 }

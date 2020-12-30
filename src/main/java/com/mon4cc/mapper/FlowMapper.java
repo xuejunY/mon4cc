@@ -1,8 +1,11 @@
 package com.mon4cc.mapper;
 
 import com.mon4cc.entity.Flow;
+import com.mon4cc.entity.KafkaSpout;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -22,4 +25,6 @@ public interface FlowMapper {
     int updateGrouping(Flow grouping);
 
     String selectGroupingId(String targetComponent) ;
+
+    List<Flow> getAllFlows(@Param("topologyId") String topologyId) ;
 }

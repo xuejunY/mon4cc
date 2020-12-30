@@ -2,9 +2,7 @@ package com.mon4cc.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.mon4cc.codeGenerated.IBoltCodeGenerated;
-import com.mon4cc.codeGenerated.IKafkaSpoutCodeGenerated;
-import com.mon4cc.codeGenerated.ISpoutCodeGenerated;
+import com.mon4cc.codeGenerated.*;
 import com.mon4cc.entity.TopologyConfiguration;
 import com.mon4cc.parse.ModelSave;
 import com.mon4cc.service.IKafkaspoutService;
@@ -33,16 +31,13 @@ public class Controller {
 	ModelParse modelParse;
 
 	@Autowired
-	IBoltCodeGenerated iBoltCodeGenerated ;
-
-	@Autowired
-	ISpoutCodeGenerated iSpoutCodeGenerated ;
-
-	@Autowired
-	IKafkaSpoutCodeGenerated iKafkaSpoutCodeGenerated ;
-
-	@Autowired
 	private ITopologyconfigurationService iTopologyconfigurationService;
+
+	@Autowired
+	private ITopologyConfigurationGenerated iTopologyConfigurationGenerated ;
+
+	@Autowired
+	private ICodeGenerate iCodeGenerate ;
 	
 	@PostMapping("/model/save")
 	public Json modelSave(@RequestBody String body) {
@@ -74,7 +69,7 @@ public class Controller {
 		String oper = "generate code" ;
 		JSONObject jsonObject = JSON.parseObject(body);
 		String topologyId = jsonObject.getString("topologyId") ;
-		return Json.result(oper,iBoltCodeGenerated.boltCodeGenerated(topologyId)) ;
+		return Json.result(oper,iCodeGenerate.generateCode(topologyId)) ;
 	}
 
 	/**
@@ -112,12 +107,5 @@ public class Controller {
 
 		return Json.result(oper,true) ;
 	}
-	@RequestMapping(value = "/model/testCode")
-	public boolean testcod(@RequestParam("topologyId") String topologyId){
-
-		return iKafkaSpoutCodeGenerated.kafkaSpoutCodeGenerated(topologyId) ;
-	}
-	
-
 
 }

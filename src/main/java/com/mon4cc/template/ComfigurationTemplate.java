@@ -134,13 +134,15 @@ public class ComfigurationTemplate {
 	public String boltConfiguration(){
 		StringBuilder sb = new StringBuilder() ;
 		for(Bolt bolt : bolts){
-			List <Flow> tempFlow = null ;
+			List <Flow> tempFlow = new ArrayList<>() ;
 			/*
 			The way that finding all flow for every bolt is too waste time, it may be improved in the future.
 			The way that Changing database structure may be improved quickly.
 			 */
 			for(Flow flow : flows){
-				if(flow.getTargetComponent().equals(bolt.getId())) tempFlow.add(flow) ;
+				if(flow.getTargetComponent().equals(bolt.getId())) {
+					tempFlow.add(flow) ;
+				}
 			}
 
 			if(tempFlow.size()==2){
@@ -222,6 +224,8 @@ public class ComfigurationTemplate {
 				}
 			} else {
 				//throw exception
+				System.out.println("Topology configuration is fail, because bolt incoming flow is more than three in" +
+						"some bolt, please check it..") ;
 			}
 		}
 		return sb.toString() ;

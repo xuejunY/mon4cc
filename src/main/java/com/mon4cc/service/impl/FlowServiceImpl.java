@@ -8,6 +8,8 @@ import com.mon4cc.service.IFlowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -47,6 +49,11 @@ public class FlowServiceImpl implements IFlowService {
     @Override
     public String getFlowIdByTarget(String targetComponent) {
         return groupingMapper.selectGroupingId(targetComponent);
+    }
+
+    @Override
+    public List<Flow> selectFlows(String topologyId) {
+        return groupingMapper.getAllFlows(topologyId);
     }
 }
 
