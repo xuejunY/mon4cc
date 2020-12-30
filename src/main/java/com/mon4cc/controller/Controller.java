@@ -3,6 +3,7 @@ package com.mon4cc.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mon4cc.codeGenerated.IBoltCodeGenerated;
+import com.mon4cc.codeGenerated.IKafkaSpoutCodeGenerated;
 import com.mon4cc.codeGenerated.ISpoutCodeGenerated;
 import com.mon4cc.entity.TopologyConfiguration;
 import com.mon4cc.parse.ModelSave;
@@ -36,6 +37,9 @@ public class Controller {
 
 	@Autowired
 	ISpoutCodeGenerated iSpoutCodeGenerated ;
+
+	@Autowired
+	IKafkaSpoutCodeGenerated iKafkaSpoutCodeGenerated ;
 
 	@Autowired
 	private ITopologyconfigurationService iTopologyconfigurationService;
@@ -111,7 +115,7 @@ public class Controller {
 	@RequestMapping(value = "/model/testCode")
 	public boolean testcod(@RequestParam("topologyId") String topologyId){
 
-		return iSpoutCodeGenerated.spoutCodeGenerated(topologyId) ;
+		return iKafkaSpoutCodeGenerated.kafkaSpoutCodeGenerated(topologyId) ;
 	}
 	
 

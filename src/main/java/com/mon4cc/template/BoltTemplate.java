@@ -79,6 +79,7 @@ public class BoltTemplate {
 	 */
 	private String execute = "\t  @Override\n"
 			+ "\t  public void execute(Tuple input) {\n"
+			+ "\t\t   tid = TID.next() ;\n"
 			+ "\t\t  {execute}\n"
 			+ "\t\t  \n"
 			+ "\t  }\n" ;
@@ -103,6 +104,8 @@ public class BoltTemplate {
 	private String globleConfiguration = "\t\t <globleConfiguration>" ;
 
 	private String classMainGenerate="public class {className} extends BaseRichSpout {\n"
+			+ "String id ; \n"
+			+ "String tid = null ;\n"
 			+ "\n"
 			+ log
 			+ "\n"

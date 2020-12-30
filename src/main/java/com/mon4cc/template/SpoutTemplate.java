@@ -81,7 +81,10 @@ public class SpoutTemplate {
 	private String classDecTemplate = "\t\t  public class <className> extends BaseRichSpout { \n"
 			+ "\t\t  private static final Logger logger = LogManager.getLogger(<className>.class) ; \n"
 			+ "\t\t  private static final IDGenerator MID = IDFactory.getIDGenerator(\"mid_\") ;\n"
-			+ "\t\t  public static final IDGenerator TID = IDFactory.getIDGenerator(\"tid_\") ;\n";
+			+ "\t\t  public static final IDGenerator TID = IDFactory.getIDGenerator(\"tid_\") ;\n"
+			+ "\t\t  String sid ;\n"
+			+ "\t\t  String mid = null ;\n"
+			+ "\t\t  String tid = null ;\n" ;
 
 	public String classDecTemplate(String spoutName){
 		return classDecTemplate.replace("<className>",spoutName) ;
@@ -116,8 +119,10 @@ public class SpoutTemplate {
 	 */
 	private String nextTupleMethodTemplate = "\t\t  @Override\n"
 			+ "\t\t  public void nextTuple() {\n"
+			+ "\t\t    mid = MID.next();\n"
+			+ "\t\t    tid = TID.next();"
 			+ "\t\t    <nextTuple> \n"
-			+ "\t\t } \n";
+			+ "\t\t } \n" ;
 
 	public String nextTupleMethodTemplate(String spoutName){
 		return nextTupleMethodTemplate.replace("<nextTuple>",getUserCode()[2].replace("<logemit>", logemit(spoutName))) ;

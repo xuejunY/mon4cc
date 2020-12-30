@@ -36,7 +36,9 @@ public class KafkaSpout {
 	 */
 	private String boostrapServer ;
 	private int maxPollRecord ;
-	private boolean autoCommit ;
+	//1 is true and 0 is false, because there isn't boolean type in the database
+	private boolean  autoCommit ;
+
 	private String groupId ;
 	private String offsetReset ;
 	private String topic ;
