@@ -6,10 +6,12 @@ import com.mon4cc.entity.Flow;
 import com.mon4cc.service.IBoltService;
 import com.mon4cc.service.IFlowService;
 import com.mon4cc.service.ITopologyconfigurationService;
+import com.mon4cc.template.BoltImproveTemplate;
 import com.mon4cc.template.BoltTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,12 +28,17 @@ public class BoltCodeGeneratedImpl implements IBoltCodeGenerated {
     private IFlowService iFlowService ;
 
     private Flow flow ;
+    private List<Flow> inFlows ;
+    private List<Flow> outFlows ;
 
     @Autowired
     private ITopologyconfigurationService iTopologyconfigurationService ;
 
     @Autowired
     private BoltTemplate boltTemplate ;
+
+    @Autowired
+    private BoltImproveTemplate boltImproveTemplate ;
 
 
     @Override
@@ -41,14 +48,12 @@ public class BoltCodeGeneratedImpl implements IBoltCodeGenerated {
         String topologyName = iTopologyconfigurationService.getTopologyName(topologyId) ;
 
         for(Bolt bolt : lists){
-            //bolt名字；这种方法只适用于一个流进入bolt
+            //The way only permit one flow in and out bolt
 
             String inGroupingId = iFlowService.getFlowIdByTarget(bolt.getId(),topologyId) ;
             flow = iFlowService.selectFlow(inGroupingId,topologyId) ;
 
             boltTemplate.setFlow(flow);
-
-//            boltTemplate =new BoltTemplate(topologyId,bolt,flow,topologyName);
             boltTemplate.setTopologyName(topologyName);
             boltTemplate.setTopologyId(topologyId);
             boltTemplate.setBolt(bolt);
@@ -57,4 +62,26 @@ public class BoltCodeGeneratedImpl implements IBoltCodeGenerated {
         }
         return true;
     }
+
+    @Override
+    public boolean boltCodeGeneratedUpgraded(String topologyId) {
+        List<Bolt> lists = iBoltService.selectBoltByTopologyId(topologyId) ;
+        String topologyName = iTopologyconfigurationService.getTopologyName(topologyId) ;
+        // The way  permit one or two flow in and out bolt
+        for(Bolt bolt : lists){
+            //find one or more one flow
+            List<String> inGroupingIds = iFlowService.getFlowIdsBySource(bolt.getId(),topologyId) ;
+            inFlows = new ArrayList<>() ;
+            for(String inGroupingId : inGroupingIds) inFlows.add(iFlowService.selectFlows(inGroupingId,topologyId)) ;
+            boltImproveTemplate.setInFlows(inFlows);
+            List<String> outGroupingIds = iFlowService.getFlowIdsBySource(bolt.getId(),topologyId) ;
+            outFlows = new ArrayList<>() ;
+            for (String outGroupingId :outGroupingIds) outFlows.add(iFlowService.selectFlows(outGroupingId,topologyId)) ;
+            boltImproveTemplate.setOutFlows(outFlows);
+            boltImproveTemplate.setBolt(bolt);
+            iBoltService.updateCode(bolt.getId(), topologyId, boltImproveTemplate.generateClassText(topologyName)) ;
+        }
+        return true;
+    }
+
 }

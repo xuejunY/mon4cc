@@ -30,7 +30,6 @@ public class CodeGenerateImpl implements ICodeGenerate {
 
     @Override
     public boolean generateCode(String topologyId) {
-        //there isn't spout
         if(iSpoutService.selectSpouts(topologyId).isEmpty()){
             iKafkaSpoutCodeGenerated.kafkaSpoutCodeGenerated(topologyId) ;
             iBoltCodeGenerated.boltCodeGenerated(topologyId) ;
@@ -45,6 +44,27 @@ public class CodeGenerateImpl implements ICodeGenerate {
             iKafkaSpoutCodeGenerated.kafkaSpoutCodeGenerated(topologyId);
             iSpoutCodeGenerated.spoutCodeGenerated(topologyId);
             iBoltCodeGenerated.boltCodeGenerated(topologyId);
+            iTopologyConfigurationGenerated.topologyConfigurationGenerated(topologyId);
+            return true;
+        }
+    }
+
+    @Override
+    public boolean generateCodeUpgrade(String topologyId) {
+        if(iSpoutService.selectSpouts(topologyId).isEmpty()){
+            iKafkaSpoutCodeGenerated.kafkaSpoutCodeGenerated(topologyId) ;
+            iBoltCodeGenerated.boltCodeGeneratedUpgraded(topologyId) ;
+            iTopologyConfigurationGenerated.topologyConfigurationGenerated(topologyId) ;
+            return true ;
+        } else if(iKafkaspoutService.selectKafkaSpouts(topologyId).isEmpty()){ //there isn't kafka spout
+            iSpoutCodeGenerated.spoutCodeGenerated(topologyId) ;
+            iBoltCodeGenerated.boltCodeGeneratedUpgraded(topologyId) ;
+            iTopologyConfigurationGenerated.topologyConfigurationGenerated(topologyId) ;
+            return true ;
+        } else {
+            iKafkaSpoutCodeGenerated.kafkaSpoutCodeGenerated(topologyId);
+            iSpoutCodeGenerated.spoutCodeGenerated(topologyId);
+            iBoltCodeGenerated.boltCodeGeneratedUpgraded(topologyId) ;
             iTopologyConfigurationGenerated.topologyConfigurationGenerated(topologyId);
             return true;
         }

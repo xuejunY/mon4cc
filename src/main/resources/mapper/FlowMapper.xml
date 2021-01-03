@@ -21,7 +21,15 @@
         select * from flow where groupingId = #{groupingId} and topologyId = #{topologyId}
     </select>
 
-    <select id="selectGroupingId"  resultType="java.lang.String" >
+    <select id="selectGroupingByTargetId"  resultType="java.lang.String" >
+        select groupingId from flow where targetComponent = #{targetComponent} and topologyId = #{topologyId}
+    </select>
+
+
+    <select id="selectGroupingsBySourceId"  resultType="java.lang.String" >
+        select groupingId from flow where sourceComponent = #{sourceComponent} and topologyId = #{topologyId}
+    </select>
+    <select id="selectGroupingsByTargetId"  resultType="java.lang.String" >
         select groupingId from flow where targetComponent = #{targetComponent} and topologyId = #{topologyId}
     </select>
 
@@ -34,5 +42,9 @@
     <select id="getAllFlows" resultType="Flow">
         select * from flow where topologyId = #{topologyId}
     </select>
+    <select id="selectGroupings" resultType="Flow">
+        select * from flow where groupingId = #{groupingId} and topologyId = #{topologyId}
+    </select>
+
 
 </mapper>

@@ -15,16 +15,20 @@ import java.util.List;
 
 /**
  * @auton xjyou_
+ * @Date 2020.12.26
  * BoltTemplate work for generate bolt code
+ * The class (#BoltTemplate) has be deprecated since 2021.01.01
  */
 @Component
 @Data
+@Deprecated
 public class BoltTemplate {
 
 	private String topologyId ;
 	private Bolt bolt ;
 	private Flow flow  ;
 	private String topologyName ;
+
 
 	public BoltTemplate(){
 

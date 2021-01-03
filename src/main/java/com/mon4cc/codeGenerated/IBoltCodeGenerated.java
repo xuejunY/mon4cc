@@ -10,5 +10,7 @@ package com.mon4cc.codeGenerated;
  * The interface(#IBoltCodeGenerated) is for generate bolt code based on given topology id.
  */
 public interface IBoltCodeGenerated {
+    @Deprecated
     boolean boltCodeGenerated(String topologyId) ;
+    boolean boltCodeGeneratedUpgraded(String topologyId) ;
 }

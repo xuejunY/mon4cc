@@ -26,5 +26,10 @@ public interface FlowMapper {
 
     String selectGroupingId(@Param("targetComponent")String targetComponent,@Param("topologyId") String topologyId) ;
 
+    List<String> selectGroupingsBySourceId(@Param("sourceComponent")String sourceComponent,@Param("topologyId") String topologyId) ;
+    List<String> selectGroupingsByTargetId(@Param("targetComponent")String targetComponent,@Param("topologyId") String topologyId) ;
+
     List<Flow> getAllFlows(@Param("topologyId") String topologyId) ;
+
+    Flow selectGroupings(@Param("groupingId") String groupingId,@Param("topologyId") String topologyId);
 }

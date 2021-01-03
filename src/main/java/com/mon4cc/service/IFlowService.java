@@ -24,6 +24,11 @@ public interface IFlowService {
 
     String getFlowIdByTarget(String targetComponent, String topologyId) ;
 
+    List<String> getFlowIdsByTarget(String targetComponent, String topologyId) ;
+    List<String>  getFlowIdsBySource(String sourceComponent, String topologyId) ;
+
+    Flow selectFlows(String groupingId,String topologyId) ;
+
     List<Flow> selectFlows (String topologyId) ;
 
 }

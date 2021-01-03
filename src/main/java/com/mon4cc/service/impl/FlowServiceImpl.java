@@ -52,6 +52,21 @@ public class FlowServiceImpl implements IFlowService {
     }
 
     @Override
+    public List<String> getFlowIdsByTarget(String targetComponentId, String topologyId) {
+        return groupingMapper.selectGroupingsByTargetId(targetComponentId,topologyId);
+    }
+
+    @Override
+    public List<String> getFlowIdsBySource(String sourceComponentId, String topologyId) {
+        return groupingMapper.selectGroupingsBySourceId(sourceComponentId,topologyId);
+    }
+
+    @Override
+    public Flow selectFlows(String groupingId, String topologyId) {
+        return groupingMapper.selectGroupings(groupingId,topologyId);
+    }
+
+    @Override
     public List<Flow> selectFlows(String topologyId) {
         return groupingMapper.getAllFlows(topologyId);
     }
