@@ -17,4 +17,5 @@ public class Mon4ccApplication {
 		SpringApplication.run(Mon4ccApplication.class, args);
 	}
 
+
 }

@@ -74,7 +74,7 @@ public class BoltCodeGeneratedImpl implements IBoltCodeGenerated {
             inFlows = new ArrayList<>() ;
             for(String inGroupingId : inGroupingIds) inFlows.add(iFlowService.selectFlows(inGroupingId,topologyId)) ;
             boltImproveTemplate.setInFlows(inFlows);
-            List<String> outGroupingIds = iFlowService.getFlowIdsBySource(bolt.getId(),topologyId) ;
+            List<String> outGroupingIds = iFlowService.getFlowIdsByTarget(bolt.getId(),topologyId) ;
             outFlows = new ArrayList<>() ;
             for (String outGroupingId :outGroupingIds) outFlows.add(iFlowService.selectFlows(outGroupingId,topologyId)) ;
             boltImproveTemplate.setOutFlows(outFlows);

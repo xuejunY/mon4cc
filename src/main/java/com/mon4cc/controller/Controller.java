@@ -69,7 +69,8 @@ public class Controller {
 		String oper = "generate code" ;
 		JSONObject jsonObject = JSON.parseObject(body);
 		String topologyId = jsonObject.getString("topologyId") ;
-		return Json.result(oper,iCodeGenerate.generateCode(topologyId)) ;
+		//return Json.result(oper,iCodeGenerate.generateCode(topologyId)) ;
+		return Json.result(oper,iCodeGenerate.generateCodeUpgrade(topologyId)) ;
 	}
 
 	/**
