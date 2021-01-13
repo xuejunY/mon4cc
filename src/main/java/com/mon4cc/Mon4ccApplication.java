@@ -15,8 +15,6 @@ public class Mon4ccApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Mon4ccApplication.class, args);
-		IDeploy id =new DeployImpl() ;
-		id.compile("WordCountDemo") ;
 	}
 
 

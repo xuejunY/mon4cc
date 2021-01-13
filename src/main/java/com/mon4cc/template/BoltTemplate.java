@@ -55,7 +55,7 @@ public class BoltTemplate {
 	 * The template for package.
 	 * {projectName} is need replaced
 	 */
-	private String packageName = "com.mon4cc.{projectName}\n"
+	private String packageName = "package com.mon4cc.{projectName};\n"
 			+ "\n" ;
 	
 	/**
@@ -64,7 +64,7 @@ public class BoltTemplate {
 	private String importPackage = "import java.util.*;\n"
 			+ "import org.apache.storm.*;\n"
 			+ "import org.slf4j.*;\n"
-			+ "import log.*\n"
+			+ "import log.*;\n"
 			+ "\n" ;
 
 	/**
@@ -73,7 +73,7 @@ public class BoltTemplate {
 	 */
 	private String prepare = "\t  @Override\n"
 			+ "\t  public void prepare(Map stormConf, TopologyContext context, OutputCollector collector){\n"
-			+ "\t\t  collector = collector"
+			+ "\t\t  collector = collector;"
 			+ "\t\t  {conf}\n"
 			+ "\t\t  \n"
 			+ "\t  } \n";
@@ -205,7 +205,7 @@ public class BoltTemplate {
 		String stream = bolt.getBoltStream() ;
 		String field = bolt.getBoltComponentName() ;
 		// declarer.declareStream("S2", new Fields("word","tid", "mid","sid"));
-		String content = "declarer.declareStream("+stream+", new Fields("+field+",\"tid\", \"mid\",\"sid\""+"))" ;
+		String content = "declarer.declareStream("+stream+", new Fields("+field+",\"tid\", \"mid\",\"sid\""+"));" ;
 		return content;
 	}
 

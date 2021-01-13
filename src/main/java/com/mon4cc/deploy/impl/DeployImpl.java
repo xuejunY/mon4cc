@@ -37,7 +37,7 @@ public class DeployImpl implements IDeploy {
     @Override
     public boolean compile(String topologyName) {
         //compile command
-        String complileCMD = "cmd /c start javac -cp .;"+jar+" *.java " ;
+        String complileCMD = "cmd /c javac -cp .;"+jar+" *.java " ;
         System.out.println(jar) ;
         runCMD(complileCMD, topologyName) ;
         return true ;
@@ -48,7 +48,7 @@ public class DeployImpl implements IDeploy {
     public boolean geneJar(String topologyName) {
         //generate command
         String generateCMD = "cmd /c jar -cvfe "+topologyName+".jar com.mon4cc."+topologyName+"."+topologyName
-                +"com.mon4cc."+topologyName ;
+                +" d:\\com\\mon4cc\\"+topologyName ;
         runCMD(generateCMD,topologyName) ;
         return true;
     }

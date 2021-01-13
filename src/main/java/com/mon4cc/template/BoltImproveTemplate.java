@@ -27,6 +27,8 @@ public class BoltImproveTemplate {
             + " <prepare>"
             + " <execute>"
             + " <declare>"
+            + " <getComponentConfiguration>"
+            + " <clean>"
             + " <end>" ;
 
     public String generateClassText(String topologyName){
@@ -36,6 +38,8 @@ public class BoltImproveTemplate {
                 .replace("<prepare>", prepare())
                 .replace("<execute>", execute())
                 .replace("<declare>", declareOutputFields())
+                .replace("<getComponentConfiguration>",getComponentConfiguration)
+                .replace("<clean>",clean)
                 .replace("<end>", "}") ;
     }
 
@@ -43,7 +47,7 @@ public class BoltImproveTemplate {
      * packageAndImportTemplate for generate package name and import
      */
     private String packageAndImportTemplate = ""
-            + "package com.mon4cc.<projectName>\n"
+            + "package com.mon4cc.<projectName>;\n"
             + "import java.util.*;\n"
             + "import java.util.Map;\n" +
             "import java.util.Random;\n" +
@@ -57,7 +61,8 @@ public class BoltImproveTemplate {
             "import org.apache.storm.tuple.Fields;\n" +
             "import org.apache.storm.tuple.Tuple;\n" +
             "import org.apache.storm.tuple.Values;\n" +
-            "import log.EventFactory;\n"
+            "import log.EventFactory;\n"+
+            "import org.apache.storm.topology.IRichBolt;\n"
             + "import org.slf4j.*;\n"
             + "import log.*;\n" ;
 
@@ -80,10 +85,10 @@ public class BoltImproveTemplate {
      * class template
      */
     private String classDecTemplate = ""
-            + "public class <className> extends BaseRichSpout {\n"
+            + "public class <className> implements IRichBolt{\n"
             + "String id ; \n"
             + "String tid = null ;\n"
-            + "SpoutOutputCollector collector ;\n"
+            + "OutputCollector collector ;\n"
             + "private static final Logger logger = LogManager.getLogger(<className>.class) ;\n";
 
     public String classDecTemplate(){
@@ -111,7 +116,6 @@ public class BoltImproveTemplate {
      */
     private String execute = "\t  @Override\n"
             + "\t  public void execute(Tuple input) {\n"
-            + "\t\t   tid = TID.next() ;\n"
             + "\t\t  <execute>\n"
             + "\t\t  \n"
             + "\t  }\n" ;
@@ -188,19 +192,27 @@ public class BoltImproveTemplate {
     public String declareOutputFields(){
         return declareOutputFields.replace("<declare>", generateDeclareMethodContent()) ;
     }
+    private String getComponentConfiguration ="\t  @Override\n"
+            + "\t  public Map<String, Object> getComponentConfiguration() {\n"
+            + "\t\t return null; \n"
+            + "\t  }\n" ;
+    private String clean ="\t  @Override\n"
+            + "\t  public void cleanup() {\n"
+            + "\t\t  \n"
+            + "\t  }\n" ;
 
     public String generateDeclareMethodContent(){
         if(outFlows.size()==2){//output flow equals 2, so declare is two. Note, there declare field are same field that is boltName
             String declareStream1 = outFlows.get(0).getStream() ;
             String declareStream2 = outFlows.get(1).getStream() ;
-            return  "declarer.declareStream("+declareStream1+", new Fields("+bolt.getBoltComponentName()+
-                    ",\"tid\", \"mid\",\"sid\""+"))\n"
-                    +"declarer.declareStream("+declareStream2+", new Fields("+bolt.getBoltComponentName()+
-                    ",\"tid\", \"mid\",\"sid\""+"))\n";
+            return  "declarer.declareStream("+"\""+declareStream1+"\""+", new Fields("+"\""+bolt.getBoltComponentName()+"\""+
+                    ",\"tid\", \"mid\",\"sid\""+"));\n"
+                    +"declarer.declareStream("+"\""+declareStream2+"\""+", new Fields("+"\""+bolt.getBoltComponentName()+"\""+
+                    ",\"tid\", \"mid\",\"sid\""+"));\n";
         }else if(outFlows.size()==1){//output flow equals 1
             String declareStream = outFlows.get(0).getStream() ;
-            return "declarer.declareStream("+declareStream+", new Fields("+bolt.getBoltComponentName()+
-                    ",\"tid\", \"mid\",\"sid\""+"))\n" ;
+            return "declarer.declareStream("+"\""+declareStream+"\""+", new Fields("+"\""+bolt.getBoltComponentName()+"\""+
+                    ",\"tid\", \"mid\",\"sid\""+"));\n" ;
         }else{
             System.out.println("you shouldn't model output stream more than 2") ;
             return "" ;

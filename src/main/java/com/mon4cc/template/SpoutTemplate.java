@@ -58,7 +58,7 @@ public class SpoutTemplate {
 	 * The template for package and import.
 	 * <projectName> is need replaced
 	 */
-	private String packageAndImportTemplate = "package com.mon4cc.<projectName>\n"
+	private String packageAndImportTemplate = "package com.mon4cc.<projectName>;\n"
 			+ "import java.text.SimpleDateFormat;\n"
 			+ "import java.util.*;\n"
 			+ "import org.apache.storm.spout.SpoutOutputCollector;\n" +
@@ -89,7 +89,7 @@ public class SpoutTemplate {
 	 * <className> is need replaced
 	 */
 	private String classDecTemplate = "\t\t  public class <className> extends BaseRichSpout { \n"
-			+ "\t\t  private static final Logger logger = LogManager.getLogger(<className>.class) ; \n"
+			+ "\t\t  private static final Logger logger = LoggerFactory.getLogger(<className>.class) ; \n"
 			+ "\t\t  private static final IDGenerator MID = IDFactory.getIDGenerator(\"mid_\") ;\n"
 			+ "\t\t  public static final IDGenerator TID = IDFactory.getIDGenerator(\"tid_\") ;\n"
 			+ "\t\t  SpoutOutputCollector collector ;\n"
@@ -152,7 +152,7 @@ public class SpoutTemplate {
 		String stream = spout.getSpoutStream();
 		String field = spout.getSpoutComponentName() ;
 		// declarer.declareStream("S2", new Fields("word","tid", "mid","sid"));
-		String declare = "declarer.declareStream("+stream+", new Fields("+field+",\"tid\", \"mid\",\"sid\""+"));" ;
+		String declare = "declarer.declareStream("+"\""+stream+"\""+", new Fields("+"\""+field+"\""+",\"tid\", \"mid\",\"sid\""+"));" ;
 		return declareOutputFieldsMethodTemplate.replace("<declare>",declare) ;
 	}
 	/**
@@ -183,7 +183,7 @@ public class SpoutTemplate {
 	 * The template for log(#SEmit)
 	 * <className> is need replaced
 	 */
-	private String logemit = "logger.error(\"{}\", EventFactory.newSEmit(<className>, tid, mid, this.sid));" ;
+	private String logemit = "logger.error(\"{}\", EventFactory.newSEmit(\"<className>\", \"tid\", \"mid\", this.sid));" ;
 
 	/**
 	 * replace <className> in template logemit

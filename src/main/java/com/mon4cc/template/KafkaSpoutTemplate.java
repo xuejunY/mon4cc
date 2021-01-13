@@ -42,7 +42,7 @@ public class KafkaSpoutTemplate {
 	 * The template for package and import.
 	 * <projectName> is need be replaced
 	 */
-	private String packageAndImportTemplate = "package com.mon4cc.<projectName>\n"
+	private String packageAndImportTemplate = "package com.mon4cc.<projectName>;\n"
 			+ "import java.time.Duration;\n"
 			+ "import java.util.*;\n"
 			+ "import org.apache.kafka.*;\n"
@@ -133,7 +133,7 @@ public class KafkaSpoutTemplate {
     public String declareOutputFieldsMethodTemplate(){
         String stream = kafkaSpout.getKafkaSpoutStream();
         String field = kafkaSpout.getSpoutComponentName() ;
-        String declare = "declarer.declareStream("+stream+", new Fields("+field+",\"tid\", \"mid\",\"sid\""+"))" ;
+        String declare = "declarer.declareStream("+"\""+stream+"\""+", new Fields("+"\""+field+"\""+",\"tid\", \"mid\",\"sid\""+"));" ;
         return declareOutputFieldsMethodTemplate.replace("<declare>",declare) ;
     }
     /**

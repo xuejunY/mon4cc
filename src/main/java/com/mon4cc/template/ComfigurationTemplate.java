@@ -49,14 +49,13 @@ public class ComfigurationTemplate {
 	 * The template for package and import.
 	 * <projectName> is need be replaced
 	 */
-	private String packageAndImportTemplate = "com.mon4cc.<projectName>\n"
+	private String packageAndImportTemplate = "package com.mon4cc.<projectName>;\n"
 			+ "import org.apache.storm.Config;\n" +
 			"import org.apache.storm.LocalCluster;\n" +
 			"import org.apache.storm.StormSubmitter;\n" +
 			"import org.apache.storm.topology.IRichBolt;\n" +
 			"import org.apache.storm.topology.TopologyBuilder;\n" +
-			"import org.apache.storm.tuple.Fields;\n" +
-			"import stromTest.TimeTool;\n"
+			"import org.apache.storm.tuple.Fields;\n"
 			+ "\n" ;
 
 
@@ -80,6 +79,7 @@ public class ComfigurationTemplate {
 			+"\t  TopologyBuilder builder = new TopologyBuilder();\n"
 			+"\t  <setSpout>\n"
 			+"\t  <setBolt>\n"
+			+"\t  Config config = new Config();\n"
 			+"\t  LocalCluster cluster = new LocalCluster();\n"
 			+"\t  cluster.submitTopology(\"<topologyName>\", config, builder.createTopology());"
 			+"\t }\n";
