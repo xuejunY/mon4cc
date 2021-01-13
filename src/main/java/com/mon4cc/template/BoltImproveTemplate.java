@@ -53,6 +53,8 @@ public class BoltImproveTemplate {
         return packageAndImportTemplate.replace("<projectName>", topologyName) ;
     }
 
+
+
     /**
      * global configuration
      */

@@ -53,9 +53,12 @@ public class ComfigurationTemplate {
 			+ "import org.apache.storm.*;\n"
 			+ "\n" ;
 
+
 	public String packageAndImportTemplate(String topologyName){
 		return packageAndImportTemplate.replace("<projectName>", topologyName) ;
 	}
+
+
 
 	/**
 	 * The template for  class.

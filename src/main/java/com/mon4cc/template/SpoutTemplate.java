@@ -74,6 +74,8 @@ public class SpoutTemplate {
 		return packageAndImportTemplate.replace("<projectName>", topologyName) ;
 	}
 
+
+
 	/**
 	 * The template for  class.
 	 * <className> is need replaced

@@ -3,6 +3,7 @@ package com.mon4cc.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mon4cc.codeGenerated.*;
+import com.mon4cc.deploy.IDeploy;
 import com.mon4cc.entity.TopologyConfiguration;
 import com.mon4cc.parse.ModelSave;
 import com.mon4cc.service.IKafkaspoutService;
@@ -38,6 +39,9 @@ public class Controller {
 
 	@Autowired
 	private ICodeGenerate iCodeGenerate ;
+
+	@Autowired
+	private IDeploy iDeploy ;
 	
 	@PostMapping("/model/save")
 	public Json modelSave(@RequestBody String body) {
@@ -73,16 +77,25 @@ public class Controller {
 		return Json.result(oper,iCodeGenerate.generateCodeUpgrade(topologyId)) ;
 	}
 
+	@PostMapping(value = "/model/compile")
+	public Json compile(@RequestBody String body){
+		String oper = "compile code " ;
+		JSONObject jsonObject = JSON.parseObject(body);
+		String topologyName = jsonObject.getString("topologyName") ;
+		return Json.result(oper,iDeploy.compile(topologyName)) ;
+	}
+
 	/**
 	 * Method (#deploy) is used to package java file as jar
-	 * @param topologyId
+	 * @param body
 	 * @return
 	 */
 	@PostMapping(value = "/model/deploy")
-	public Json deploy(@RequestBody String topologyId){
+	public Json packageJar(@RequestBody String body){
 		String oper = "deploy model" ;
-
-		return Json.result(oper,true) ;
+		JSONObject jsonObject = JSON.parseObject(body) ;
+		String topologyName = jsonObject.getString("topologyName") ;
+		return Json.result(oper,iDeploy.geneJar(topologyName)) ;
 	}
 
 	/**

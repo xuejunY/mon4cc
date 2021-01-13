@@ -55,6 +55,7 @@ public class KafkaSpoutTemplate {
 		return packageAndImportTemplate.replace("<projectName>", topologyName) ;
 	}
 
+
 	/**
 	 * The template for  class.
 	 * <className> is need be replaced
