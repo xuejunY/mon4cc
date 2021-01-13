@@ -42,13 +42,25 @@ public class KafkaSpoutTemplate {
 	 * The template for package and import.
 	 * <projectName> is need be replaced
 	 */
-	private String packageAndImportTemplate = "com.mon4cc.<projectName>\n"
+	private String packageAndImportTemplate = "package com.mon4cc.<projectName>\n"
 			+ "import java.time.Duration;\n"
 			+ "import java.util.*;\n"
 			+ "import org.apache.kafka.*;\n"
-			+ "import org.apache.storm.*;\n"
+			+ "import org.apache.storm.spout.SpoutOutputCollector;\n" +
+			"import org.apache.storm.task.TopologyContext;\n" +
+			"import org.apache.storm.topology.OutputFieldsDeclarer;\n" +
+			"import org.apache.storm.topology.base.BaseRichSpout;\n" +
+			"import org.apache.storm.tuple.Fields;\n" +
+			"import org.apache.storm.tuple.Tuple;\n" +
+			"import org.apache.storm.tuple.Values;\n" +
+			"import org.apache.storm.utils.Utils;\n" +
+			"import org.slf4j.Logger;\n" +
+			"import org.slf4j.LoggerFactory;\n" +
+			"import log.EventFactory;\n" +
+			"import log.IDFactory;\n" +
+			"import log.IDGenerator;\n"
 			+ "import org.slf4j.*;\n"
-			+ "import log.*\n"
+			+ "import log.*;\n"
 			+ "\n" ;
 
 	public String packageAndImportTemplate(String topologyName){

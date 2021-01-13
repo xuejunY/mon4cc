@@ -43,11 +43,23 @@ public class BoltImproveTemplate {
      * packageAndImportTemplate for generate package name and import
      */
     private String packageAndImportTemplate = ""
-            + "com.mon4cc.<projectName>\n"
+            + "package com.mon4cc.<projectName>\n"
             + "import java.util.*;\n"
-            + "import org.apache.storm.*;\n"
+            + "import java.util.Map;\n" +
+            "import java.util.Random;\n" +
+            "import java.util.concurrent.atomic.AtomicInteger;\n" +
+            "import org.apache.logging.log4j.LogManager;\n" +
+            "import org.apache.logging.log4j.Logger;\n" +
+            "import org.apache.storm.task.OutputCollector;\n" +
+            "import org.apache.storm.task.TopologyContext;\n" +
+            "import org.apache.storm.topology.IRichBolt;\n" +
+            "import org.apache.storm.topology.OutputFieldsDeclarer;\n" +
+            "import org.apache.storm.tuple.Fields;\n" +
+            "import org.apache.storm.tuple.Tuple;\n" +
+            "import org.apache.storm.tuple.Values;\n" +
+            "import log.EventFactory;\n"
             + "import org.slf4j.*;\n"
-            + "import log.*\n" ;
+            + "import log.*;\n" ;
 
     public String packageAndImportTemplate(String topologyName){
         return packageAndImportTemplate.replace("<projectName>", topologyName) ;
@@ -84,7 +96,7 @@ public class BoltImproveTemplate {
      */
     private String prepare = "\t  @Override\n"
             + "\t  public void prepare(Map stormConf, TopologyContext context, OutputCollector collector){\n"
-            + "\t\t  collector = collector"
+            + "\t\t  collector = collector ;"
             + "\t\t  <conf>\n"
             + "\t  } \n" ;
 

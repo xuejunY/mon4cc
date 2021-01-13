@@ -50,7 +50,13 @@ public class ComfigurationTemplate {
 	 * <projectName> is need be replaced
 	 */
 	private String packageAndImportTemplate = "com.mon4cc.<projectName>\n"
-			+ "import org.apache.storm.*;\n"
+			+ "import org.apache.storm.Config;\n" +
+			"import org.apache.storm.LocalCluster;\n" +
+			"import org.apache.storm.StormSubmitter;\n" +
+			"import org.apache.storm.topology.IRichBolt;\n" +
+			"import org.apache.storm.topology.TopologyBuilder;\n" +
+			"import org.apache.storm.tuple.Fields;\n" +
+			"import stromTest.TimeTool;\n"
 			+ "\n" ;
 
 
@@ -103,8 +109,8 @@ public class ComfigurationTemplate {
 	 * e.g.  builder.setSpout("spout", new RandomSentenceSpout(), 1);
 	 * @return
 	 */
-	private String spoutConfiguration = "builder.setSpout(\"<spoutName>\", new <spoutName>(), <parallelism>" ;
-	private String kafkaSpoutConfiguration = "builder.setSpout(\"<kafkaSpoutName>\", new <kafkaSpoutName>(), <parallelism>";
+	private String spoutConfiguration = "builder.setSpout(\"<spoutName>\", new <spoutName>(), <parallelism>);" ;
+	private String kafkaSpoutConfiguration = "builder.setSpout(\"<kafkaSpoutName>\", new <kafkaSpoutName>(), <parallelism>);";
 
 	public String spoutConfiguration(){
 
@@ -124,15 +130,15 @@ public class ComfigurationTemplate {
 	}
 	// builder.setBolt("split", splitBolt, 2).shuffleGrouping("spout","S1");
 	//there is one flow into bolt
-	private String boltConfiguration1 = "builder.setBolt(\"<boltName>\", new <boltName>(), <parallelism>).<grouping>(<sourceComponent>,<stream>); " ;
+	private String boltConfiguration1 = "builder.setBolt(\"<boltName>\", new <boltName>(), <parallelism>).<grouping>(\"<sourceComponent>\",\"<stream>\"); " ;
 	//there are two flow into bolt
-	private String boltConfiguration2 = "builder.setBolt(\"<boltName>\", new <boltName>(), <parallelism>).<grouping1>(<sourceComponent1>,<stream1>)"
-			+ ".<grouping2>(<sourceComponent2>,<stream2>); " ;
+	private String boltConfiguration2 = "builder.setBolt(\"<boltName>\", new <boltName>(), <parallelism>).<grouping1>(\"<sourceComponent1>\",\"<stream1>\")"
+			+ ".<grouping2>(\"<sourceComponent2>\",\"<stream2>\"); " ;
 	//there are three flow into bolt
-	private String boltConfiguration3 = "builder.setBolt(\"<boltName>\", new <boltName>(), <parallelism>).<grouping1>(<sourceComponent1>,<stream1>)"
-			+ ".<grouping2>(<sourceComponent2>,<stream2>).<grouping3>(<sourceComponent3>,<stream3>); " ;
+	private String boltConfiguration3 = "builder.setBolt(\"<boltName>\", new <boltName>(), <parallelism>).<grouping1>(\"<sourceComponent1>\",\"<stream1>\")"
+			+ ".<grouping2>(\"<sourceComponent2>\",\"<stream2>\").<grouping3>(\"<sourceComponent3>\",\"<stream3>\"); " ;
 	//ther are flow for fieldsGrouping
-	private String boltConfigurationField = "builder.setBolt(\"<boltName>\", new <boltName>(), <parallelism>).<grouping>(<sourceComponent>,<stream>, new Fields<field>);" ;
+	private String boltConfigurationField = "builder.setBolt(\"<boltName>\", new <boltName>(), <parallelism>).<grouping>(\"<sourceComponent>\",\"<stream>\", new Fields(\"<field>\"));" ;
 
 	public String boltConfiguration(){
 		StringBuilder sb = new StringBuilder() ;

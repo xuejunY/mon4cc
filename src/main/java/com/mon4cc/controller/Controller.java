@@ -35,7 +35,7 @@ public class Controller {
 	private ITopologyconfigurationService iTopologyconfigurationService;
 
 	@Autowired
-	private IKafkaSpoutCodeGenerated iKafkaSpoutCodeGenerated ;
+	private ISpoutCodeGenerated iSpoutCodeGenerated ;
 
 	@Autowired
 	private ICodeGenerate iCodeGenerate ;
@@ -91,7 +91,7 @@ public class Controller {
 	 * @return
 	 */
 	@PostMapping(value = "/model/deploy")
-	public Json packageJar(@RequestBody String body){
+	public Json deploy(@RequestBody String body){
 		String oper = "deploy model" ;
 		JSONObject jsonObject = JSON.parseObject(body) ;
 		String topologyName = jsonObject.getString("topologyName") ;
@@ -121,11 +121,10 @@ public class Controller {
 
 		return Json.result(oper,true) ;
 	}
-
-	@RequestMapping(value = "/model/testKafkaSpout")
-	public boolean test(@RequestParam("topologyId") String topologyId){
-
-		return  iKafkaSpoutCodeGenerated.kafkaSpoutCodeGenerated(topologyId) ;
+	@PostMapping(value = "/model/test")
+	public boolean generate(@RequestParam String topologyId){
+		return iSpoutCodeGenerated.spoutCodeGenerated(topologyId) ;
 	}
+
 
 }

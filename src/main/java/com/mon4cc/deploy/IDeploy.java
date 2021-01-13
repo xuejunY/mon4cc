@@ -6,6 +6,6 @@ package com.mon4cc.deploy;
  * the interface is for deploy storm application
  */
 public interface IDeploy {
-    boolean compile(String deployName) ;
-    boolean geneJar(String deployName) ;
+    boolean compile(String topologyName) ;
+    boolean geneJar(String topologyName) ;
 }

@@ -24,11 +24,11 @@ public class DeployImpl implements IDeploy {
                 +libJar+"metrics-graphite-3.1.0.jar;"
                 +libJar+"minlog-1.3.0.jar;"
                 +libJar+"objenesis-2.1.jar;"
+                +libJar+"self-log-1.0.jar;"
                 +libJar+"reflectasm-1.10.1.jar;"
                 +libJar+"ring-core-0.2.0.jar;"
                 +libJar+"servlet-api-2.5.jar;"
                 +libJar+"storm-rename-hack-1.2.3.jar;"
-                +libJar+"self-log-1.0.jar;"
                 +libJar+"slf4j-api-1.7.21.jar;"
                 +libJar+"storm-core-1.2.3.jar";
 
@@ -37,7 +37,8 @@ public class DeployImpl implements IDeploy {
     @Override
     public boolean compile(String topologyName) {
         //compile command
-        String complileCMD = "cmd /c javac -cp .;"+jar+" *.java " ;
+        String complileCMD = "cmd /c start javac -cp .;"+jar+" *.java " ;
+        System.out.println(jar) ;
         runCMD(complileCMD, topologyName) ;
         return true ;
 
@@ -56,6 +57,8 @@ public class DeployImpl implements IDeploy {
     public boolean runCMD(String command,String topologyName){
         boolean flag = false;
         try{
+            System.out.println("执行CMD命令") ;
+            System.out.println("d:/com/mon4cc/"+topologyName) ;
             Runtime.getRuntime().exec(command,null,new File("d:/com/mon4cc/"+topologyName));
             flag = true;
         }catch(Exception e){
