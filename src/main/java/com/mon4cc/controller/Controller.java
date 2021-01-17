@@ -79,10 +79,12 @@ public class Controller {
 
 	@PostMapping(value = "/model/compile")
 	public Json compile(@RequestBody String body){
-		String oper = "compile code " ;
 		JSONObject jsonObject = JSON.parseObject(body);
 		String topologyName = jsonObject.getString("topologyName") ;
-		return Json.result(oper,iDeploy.compile(topologyName)) ;
+		String oper = iDeploy.compile(topologyName) ;
+		if(oper.equals(""))  return Json.result("compile success",true) ;
+		else return Json.result(oper,false) ;
+
 	}
 
 	/**
@@ -92,10 +94,12 @@ public class Controller {
 	 */
 	@PostMapping(value = "/model/deploy")
 	public Json deploy(@RequestBody String body){
-		String oper = "deploy model" ;
 		JSONObject jsonObject = JSON.parseObject(body) ;
 		String topologyName = jsonObject.getString("topologyName") ;
-		return Json.result(oper,iDeploy.geneJar(topologyName)) ;
+		String oper = iDeploy.geneJar(topologyName) ;
+		if(oper.equals("")) return Json.result("package jar success",true) ;
+		else return Json.result(oper,false) ;
+
 	}
 
 	/**

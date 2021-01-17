@@ -3,7 +3,9 @@ package com.mon4cc.deploy.impl;
 import com.mon4cc.deploy.IDeploy;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
+import java.io.*;
+import java.nio.charset.Charset;
+
 @Component
 public class DeployImpl implements IDeploy {
 
@@ -35,35 +37,42 @@ public class DeployImpl implements IDeploy {
 
 
     @Override
-    public boolean compile(String topologyName) {
+    public String compile(String topologyName) {
         //compile command
         String complileCMD = "cmd /c javac -cp .;"+jar+" *.java " ;
-        System.out.println(jar) ;
-        runCMD(complileCMD, topologyName) ;
-        return true ;
+       // System.out.println(complileCMD);
+        return runCMD(complileCMD, topologyName) ;
 
     }
 
+
     @Override
-    public boolean geneJar(String topologyName) {
+    public String geneJar(String topologyName) {
         //generate command
         String generateCMD = "cmd /c jar -cvfe "+topologyName+".jar com.mon4cc."+topologyName+"."+topologyName
                 +" d:\\com\\mon4cc\\"+topologyName ;
-        runCMD(generateCMD,topologyName) ;
-        return true;
+
+        return runCMD(generateCMD,topologyName) ;
     }
 
+
+
     //command is run in specify location
-    public boolean runCMD(String command,String topologyName){
-        boolean flag = false;
+    public String runCMD(String command,String topologyName){
         try{
-            System.out.println("执行CMD命令") ;
-            System.out.println("d:/com/mon4cc/"+topologyName) ;
-            Runtime.getRuntime().exec(command,null,new File("d:/com/mon4cc/"+topologyName));
-            flag = true;
+            Process pc = Runtime.getRuntime().exec(command,null,new File("d:/com/mon4cc/"+topologyName));
+           return getCMDInfo(pc.getErrorStream()) ;
         }catch(Exception e){
             e.printStackTrace();
         }
-        return flag;
+        return "null";
+    }
+
+    public String getCMDInfo(InputStream inputStream) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("GBK")));
+        String line=null;
+        StringBuffer info=new StringBuffer();
+        while ((line=br.readLine())!=null)  info.append(line+"\n");
+        return info.toString() ;
     }
 }
