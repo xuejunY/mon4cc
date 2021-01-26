@@ -1,8 +1,8 @@
 package com.mon4cc.service.impl;
 
 
-import com.mon4cc.mapper.TopologyconfigurationMapper;
-import com.mon4cc.service.ITopologyconfigurationService;
+import com.mon4cc.mapper.ModelconfigurationMapper;
+import com.mon4cc.service.IModelconfigurationService;
 
 
 
@@ -18,35 +18,35 @@ import org.springframework.stereotype.Service;
  * @since 2020-12-19
  */
 @Service
-public class TopologyconfigurationServiceImpl implements ITopologyconfigurationService {
+public class ModelconfigurationServiceImpl implements IModelconfigurationService {
     @Autowired
-    private TopologyconfigurationMapper topologyconfigurationMapper;
+    private ModelconfigurationMapper modelconfigurationMapper;
 
     @Override
     public boolean insertXml(String tid, String modelXml) {
-        topologyconfigurationMapper.addXml(tid,modelXml);
+        modelconfigurationMapper.addXml(tid,modelXml);
         return true;
     }
 
     @Override
     public String selectXml(String tid) {
-        return  topologyconfigurationMapper.getXml(tid);
+        return  modelconfigurationMapper.getXml(tid);
 
     }
 
     @Override
     public String getTopologyName(String tid) {
-        return topologyconfigurationMapper.getTopologyName(tid) ;
+        return modelconfigurationMapper.getTopologyName(tid) ;
     }
 
     @Override
     public boolean getIsLocal(String topologyId) {
-        return topologyconfigurationMapper.getIsLocal(topologyId);
+        return modelconfigurationMapper.getIsLocal(topologyId);
     }
 
     @Override
     public boolean updateCode(String topologyId, String code) {
-        return topologyconfigurationMapper.updateConfigurationCodeIntoSpoutTable(topologyId,code);
+        return modelconfigurationMapper.updateConfigurationCodeIntoSpoutTable(topologyId,code);
     }
 }
 

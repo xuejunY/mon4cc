@@ -2,16 +2,8 @@ package com.mon4cc.template;
 
 import com.mon4cc.entity.Bolt;
 import com.mon4cc.entity.Flow;
-import com.mon4cc.service.IBoltService;
-import com.mon4cc.service.IFlowService;
-import com.mon4cc.service.ITopologyconfigurationService;
 import lombok.Data;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-
-import java.util.List;
 
 /**
  * @auton xjyou_

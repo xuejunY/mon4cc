@@ -7,20 +7,20 @@ import lombok.Data;
  * @Date 2020年12月15日
  */
 @Data
-public class TopologyConfiguration {
+public class ModelConfiguration {
 	
 	/*Topology id*/
-	private String topologyId ;
+	private String modelId;
 	
 	/*Topology name*/
-	private String topologyName ;
+	private String modelName;
 	
 	/*Whether topology is deployed in local or distributed, 
 	 * true is local and false is distributed */
 	private boolean isLocal ;
 	
 	/*Topology's xml file*/
-	private String topologyXml ;
+	private String modelXml;
 	
 	/*Topology's description*/
 	private String description ;
@@ -36,5 +36,9 @@ public class TopologyConfiguration {
 
 	/*Topology's complete code */
 	private String completeConfigurationCode ;
+
+	private String modelEcl;
+
+	private String typeName;
 }
 

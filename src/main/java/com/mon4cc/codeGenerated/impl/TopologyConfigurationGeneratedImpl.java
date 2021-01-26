@@ -28,7 +28,7 @@ public class TopologyConfigurationGeneratedImpl implements ITopologyConfiguratio
     ComfigurationTemplate comfigurationTemplate ;
 
     @Autowired
-    ITopologyconfigurationService iTopologyconfigurationService ;
+    IModelconfigurationService iModelconfigurationService;
 
     @Autowired
     IFlowService iFlowService ;
@@ -43,8 +43,8 @@ public class TopologyConfigurationGeneratedImpl implements ITopologyConfiguratio
         comfigurationTemplate.setBolts(bolts) ;
         comfigurationTemplate.setKafkaSpouts(kafkaSpouts) ;
         comfigurationTemplate.setFlows(flows);
-        iTopologyconfigurationService.updateCode(topologyId,comfigurationTemplate.generateClassText(iTopologyconfigurationService.getTopologyName(topologyId),
-                iTopologyconfigurationService.getIsLocal(topologyId))) ;
+        iModelconfigurationService.updateCode(topologyId,comfigurationTemplate.generateClassText(iModelconfigurationService.getTopologyName(topologyId),
+                iModelconfigurationService.getIsLocal(topologyId))) ;
         return true;
     }
 }

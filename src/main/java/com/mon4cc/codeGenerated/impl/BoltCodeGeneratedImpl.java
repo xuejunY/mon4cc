@@ -5,7 +5,7 @@ import com.mon4cc.entity.Bolt;
 import com.mon4cc.entity.Flow;
 import com.mon4cc.service.IBoltService;
 import com.mon4cc.service.IFlowService;
-import com.mon4cc.service.ITopologyconfigurationService;
+import com.mon4cc.service.IModelconfigurationService;
 import com.mon4cc.template.BoltImproveTemplate;
 import com.mon4cc.template.BoltTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class BoltCodeGeneratedImpl implements IBoltCodeGenerated {
     private List<Flow> outFlows ;
 
     @Autowired
-    private ITopologyconfigurationService iTopologyconfigurationService ;
+    private IModelconfigurationService iModelconfigurationService;
 
     @Autowired
     private BoltTemplate boltTemplate ;
@@ -45,7 +45,7 @@ public class BoltCodeGeneratedImpl implements IBoltCodeGenerated {
     public boolean boltCodeGenerated(String topologyId) {
 
         List<Bolt> lists = iBoltService.selectBoltByTopologyId(topologyId) ;
-        String topologyName = iTopologyconfigurationService.getTopologyName(topologyId) ;
+        String topologyName = iModelconfigurationService.getTopologyName(topologyId) ;
 
         for(Bolt bolt : lists){
             //The way only permit one flow in and out bolt
@@ -66,7 +66,7 @@ public class BoltCodeGeneratedImpl implements IBoltCodeGenerated {
     @Override
     public boolean boltCodeGeneratedUpgraded(String topologyId) {
         List<Bolt> lists = iBoltService.selectBoltByTopologyId(topologyId) ;
-        String topologyName = iTopologyconfigurationService.getTopologyName(topologyId) ;
+        String topologyName = iModelconfigurationService.getTopologyName(topologyId) ;
         // The way  permit one or two flow in and out bolt
         for(Bolt bolt : lists){
             //find one or more one flow

@@ -3,7 +3,7 @@ package com.mon4cc.codeGenerated.impl;
 import com.mon4cc.codeGenerated.IKafkaSpoutCodeGenerated;
 import com.mon4cc.entity.KafkaSpout;
 import com.mon4cc.service.IKafkaspoutService;
-import com.mon4cc.service.ITopologyconfigurationService;
+import com.mon4cc.service.IModelconfigurationService;
 import com.mon4cc.template.KafkaSpoutTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class KafkaSpoutGeneratedImpl implements IKafkaSpoutCodeGenerated {
     KafkaSpoutTemplate kafkaSpoutTemplate ;
 
     @Autowired
-    ITopologyconfigurationService iTopologyconfigurationService ;
+    IModelconfigurationService iModelconfigurationService;
 
     String topologyName ;
     String kafkaSpoutName ;
@@ -36,7 +36,7 @@ public class KafkaSpoutGeneratedImpl implements IKafkaSpoutCodeGenerated {
         List<KafkaSpout> kafkaSpouts = iKafkaspoutService.selectKafkaSpouts(topologyId) ;
         for(KafkaSpout kafkaSpout : kafkaSpouts){
             kafkaSpoutTemplate.setKafkaSpout(kafkaSpout);
-            topologyName = iTopologyconfigurationService.getTopologyName(topologyId) ;
+            topologyName = iModelconfigurationService.getTopologyName(topologyId) ;
             kafkaSpoutName = kafkaSpout.getSpoutComponentName() ;
             kafkaSpoutId = kafkaSpout.getId() ;
             kafkaSpoutCode  = kafkaSpoutTemplate.generateClassText(topologyName,kafkaSpoutName) ;
