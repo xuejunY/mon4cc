@@ -8,7 +8,7 @@ package com.mon4cc.service;
  * @author yangsanhe
  * @since 2020-12-19
  */
-public interface ITopologyconfigurationService{
+public interface IModelconfigurationService {
 
     boolean insertXml(String tid, String modelXml);
     String selectXml(String tid);

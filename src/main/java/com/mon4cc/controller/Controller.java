@@ -4,15 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mon4cc.codeGenerated.*;
 import com.mon4cc.deploy.IDeploy;
-import com.mon4cc.entity.TopologyConfiguration;
 import com.mon4cc.parse.ModelSave;
-import com.mon4cc.service.IKafkaspoutService;
-import com.mon4cc.service.ITopologyconfigurationService;
+import com.mon4cc.service.IModelconfigurationService;
 import com.mon4cc.vo.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.web.multipart.MultipartFile;
 
 import com.mon4cc.parse.ModelParse;
 import com.mon4cc.parse.entity.ModelDTO;
@@ -32,7 +28,7 @@ public class Controller {
 	ModelParse modelParse;
 
 	@Autowired
-	private ITopologyconfigurationService iTopologyconfigurationService;
+	private IModelconfigurationService iModelconfigurationService;
 
 	@Autowired
 	private ISpoutCodeGenerated iSpoutCodeGenerated ;
@@ -47,7 +43,7 @@ public class Controller {
 	public Json modelSave(@RequestBody String body) {
 		String oper = "save xml";
 		ModelDTO modelDTO = JSON.parseObject(body, ModelDTO.class);
-		boolean success = iTopologyconfigurationService.insertXml(modelDTO.getTid(),modelDTO.getModelXml());
+		boolean success = iModelconfigurationService.insertXml(modelDTO.getTid(),modelDTO.getModelXml());
 		return Json.result(oper, success);
 	}
 

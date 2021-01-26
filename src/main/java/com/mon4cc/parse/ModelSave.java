@@ -3,7 +3,7 @@ package com.mon4cc.parse;
 
 
 import com.mon4cc.parse.entity.ModelDTO;
-import com.mon4cc.service.ITopologyconfigurationService;
+import com.mon4cc.service.IModelconfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,7 +21,7 @@ public class ModelSave {
 
 
     @Autowired
-    private ITopologyconfigurationService iTopologyconfigurationService;
+    private IModelconfigurationService iModelconfigurationService;
 
 
     public boolean saveModel(ModelDTO modelDTO) {
@@ -29,7 +29,7 @@ public class ModelSave {
         tid = modelDTO.getTid();
         modelXml = modelDTO.getModelXml();
         //save model
-        iTopologyconfigurationService.insertXml(tid, modelXml);// actually update operation
+        iModelconfigurationService.insertXml(tid, modelXml);// actually update operation
         return true;
     }
 }

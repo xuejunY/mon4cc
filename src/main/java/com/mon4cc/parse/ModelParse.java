@@ -29,18 +29,15 @@ import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 
 import org.camunda.bpm.model.bpmn.instance.*;
 
-import org.junit.Before;
-
 import com.mon4cc.entity.Bolt;
 import com.mon4cc.entity.Flow;
 import com.mon4cc.entity.KafkaSpout;
 import com.mon4cc.entity.Spout;
-import com.mon4cc.parse.entity.ModelDTO;
 import com.mon4cc.service.IBoltService;
 import com.mon4cc.service.IFlowService;
 import com.mon4cc.service.IKafkaspoutService;
 import com.mon4cc.service.ISpoutService;
-import com.mon4cc.service.ITopologyconfigurationService;
+import com.mon4cc.service.IModelconfigurationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -65,7 +62,7 @@ public class ModelParse {
 	@Autowired
 	private IBoltService iBoltService;
 	@Autowired
-	private ITopologyconfigurationService iTopologyconfigurationService;
+	private IModelconfigurationService iModelconfigurationService;
 	@Autowired
 	private ISpoutService iSpoutService;
 	@Autowired
@@ -77,7 +74,7 @@ public class ModelParse {
 	public String parseModel(String tid) {
 		//根据tid从数据库查出model
 		this.tid = tid ;
-		String modelxml=iTopologyconfigurationService.selectXml(tid) ;
+		String modelxml= iModelconfigurationService.selectXml(tid) ;
 		modelInstance=Bpmn.readModelFromStream(trasStringToInputStream.getInputStream(modelxml)) ;
 		parseSpout() ;
 		parseKafkaSpout() ;

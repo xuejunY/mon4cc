@@ -1,40 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mon4cc.mapper.TopologyconfigurationMapper">
+<mapper namespace="com.mon4cc.mapper.ModelconfigurationMapper">
 
 
-    <resultMap id="BaseResultMap" type="com.mon4cc.entity.TopologyConfiguration">
-        <id column="topologyId" property="topologyId" />
-        <result column="topologyName" property="topologyName" />
-        <result column="isLocal" property="isLocal" />
-        <result column="topologyXml" property="topologyXml" />
+    <resultMap id="BaseResultMap" type="com.mon4cc.entity.ModelConfiguration">
+        <id column="modelId" property="modelId" />
+        <result column="modelName" property="modelName" />
+        <result column="modelXml" property="modelXml" />
         <result column="description" property="description" />
         <result column="state" property="state" />
         <result column="creater" property="creater" />
         <result column="createTime" property="createTime" />
         <result column="completeConfigurationCode" property="completeConfigurationCode" />
+        <result column="modelEcl" property="modelEcl" />
+        <result column="typeName" property="typeName" />
+        <result column="isLocal" property="isLocal" />
     </resultMap>
     <update id="addXml" parameterType="java.lang.String">
-        update topologyconfiguration set topologyXml = #{modelXml}
-        where topologyId = #{tid}
+        update modelconfiguration set modelXml = #{modelXml}
+        where modelId = #{tid}
     </update>
 
 
     <select id="getXml" parameterType="java.lang.String" resultType="java.lang.String">
-        select topologyXml from topologyconfiguration where topologyId=#{tid}
+        select modelXml from modelconfiguration where modelId=#{tid}
     </select>
 
     <select id="getTopologyName" parameterType="java.lang.String" resultType="java.lang.String">
-        select topologyName from topologyconfiguration where topologyId=#{tid}
+        select modelName from modelconfiguration where modelId=#{tid}
     </select>
 
     <select id="getIsLocal" parameterType="java.lang.String" resultType="java.lang.Boolean">
-        select isLocal from topologyconfiguration where topologyId=#{topologyId}
+        select isLocal from modelconfiguration where modelId=#{topologyId}
     </select>
 
     <update id="updateConfigurationCodeIntoSpoutTable" >
-        update topologyconfiguration set completeConfigurationCode = #{completeConfigurationCode}
-        where topologyId=#{topologyId}
+        update modelconfiguration set completeConfigurationCode = #{completeConfigurationCode}
+        where modelId=#{topologyId}
     </update>
 
 </mapper>
